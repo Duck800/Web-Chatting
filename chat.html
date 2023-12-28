@@ -22,38 +22,33 @@
 
 <!-- 聊天区域 -->
 <div class="chat-content">
-    
-    <div class="chat-body bounceIn ">
-        <!-- 左侧边栏 -->
-        <div class="chat-left col-xs-3 col-sm-3 col-md-3" id="chatSidebar">
-            <!-- 左侧边栏顶部搜索框 -->
+        <div class="sideBar col-xs-1 col-sm-1 col-md-1" id="Sidebar">
+            <div class="logo">
+                <img src="img/logo.png"
+                style="width:35px;"/>
+            </div>
             <div class="currentUser">
                 <!--当前用户头像-->
                 <a class="currentUserImg">
-                    <img src="img/user.jpg" class="cursor-pointer">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle">
                 </a>
-                <span class="currentUserAccount">八百斤鸭</span>
-
             </div>
-            <!-- 搜索栏 -->
-            <hr width="90%"
-                style="margin:18px auto 5px;border:0.5px solid rgba(0,0,0,0.08);box-shadow: 0 1px 0px rgba(245,245,245,.6)"/>
-
+        </div>
+        <!-- 左侧边栏 -->
+        <div class="chat-left col-xs-2 col-sm-2 col-md-2" id="chatSidebar">
+            <h3 style="position:relative;left:5%;">信息</h3>
             <div class="chat-left-top">
                 <form class="form-inline chat-top-form per100">
                     <div class="form-group per100 search-group">
                         <i class="icon-search"></i>
-                        <input class="form-control search-input per70 mr5 pull-left" type="text" placeholder="搜索"
+                        <input class="form-control search-input per85 mr5 pull-left" type="text" placeholder="搜索"
                                id="search-friends">
                         <button class="btn addFriendBtn pull-right" title="添加好友" type="button" data-toggle="modal"
                                 data-target="#addFriend"><i
                                 class="icon-plus"></i></button>
-                        <div class="clearfix"></div>
                     </div>
                 </form>
             </div>
-            <hr width="90%"
-                style="margin:5px auto 0px;border:0.5px solid rgba(0,0,0,0.08);box-shadow: 0 1px 0px rgba(245,245,245,.6)"/>
             <!-- 好友列表 -->
             <ul class="friend-list" id="left-friend-list">
                 <li>
@@ -101,17 +96,16 @@
 
         <!-- 中间聊天窗口 -->
         <div class="chat-central">
-
-            <!--  -->
             <div class="chat-central-top">
-                <button class="btn btn-link a-none" id="sidebarBtn">
+                <!-- 聊天icon -->
+                <!-- <button class="btn btn-link a-none" id="sidebarBtn">
                     <i class="icon-navicon s20"></i>
-                </button>
-                <h4 class="chat-title">
-                    <i class="icon-bubbles4 mr5"></i>
-                    <span id="current-friend">登山花椒</span>
-                </h4>
-                <button type="button" class="close" id="ifm-close">&times;</button>
+                </button> -->
+                <a class="a-none friend" href="javascript:void(null);">
+                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">
+                    <span class="friendName s15 strong">登山花椒</span>
+                </a>
+                <!-- <button type="button" class="close" id="ifm-close">&times;</button> -->
             </div>
 
             <!-- 消息显示 -->
@@ -119,34 +113,41 @@
 
                 <!-- 自己发的消息 -->
                 <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">嘿</span>
-                    <img src="img/poster-about.jpg" class="users-img cursor-pointer ml20 img-circle">
+                    <span class="my-msg-qipao">孙韩雅</span>
+                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
                     <input class="NowTime" value="2018/07/01 07:15:59" type="hidden"/>
                 </div>
 
                 <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">最近还好吗？</span>
-                    <img src="img/poster-about.jpg" class="users-img cursor-pointer ml20 img-circle">
+                    <span class="my-msg-qipao">还在写代码？</span>
+                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
                     <input class="NowTime" value="2018/07/01 07:18:59" type="hidden"/>
                 </div>
 
                 <!-- 对方发的消息 -->
                 <div class="friend-msg per100 fadeInDown msg">
-                    <img src="img/img-1.jpg" class="users-img mr20 cursor-pointer img-circle">
-                    <span class="friend-msg-qipao">嗯？我们认识吗？</span>
+                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+                    <span class="friend-msg-qipao">对啊，我刚写了个聊天页面</span>
                     <input class="NowTime" value="2018/07/01 08:21:59" type="hidden"/>
                 </div>
 
                 <!-- 自己发的消息 -->
                 <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">可以认识一下</span>
-                    <img src="img/poster-about.jpg" class="users-img cursor-pointer ml20 img-circle">
+                    <span class="my-msg-qipao">啥样的</span>
+                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
                     <input class="NowTime" value="2018/07/05 06:12:59" type="hidden"/>
                 </div>
-
+                <!-- 对方发的消息 -->
                 <div class="friend-msg per100 fadeInDown msg">
-                    <img src="img/img-1.jpg" class="users-img mr20 cursor-pointer img-circle">
-                    <span class="friend-msg-qipao">噢，那很高兴认识你。</span>
+                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+                    <img src="img/UIDesign.png" style="width:400px;border-radius:5px;"/>
+                    <input class="NowTime" value="2018/07/08 08:18:59" type="hidden"/>
+                </div>
+
+                <!-- 对方发的消息 -->
+                <div class="friend-msg per100 fadeInDown msg">
+                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+                    <span class="friend-msg-qipao">这是设计图</span>
                     <input class="NowTime" value="2018/07/08 08:18:59" type="hidden"/>
                 </div>
 
@@ -160,42 +161,93 @@
                     </div>
                     <div class="form-group m0 pr15 pb15 pt5 white-bg relative">
                         <!-- 发送消息的按钮 -->
-                        <button type="button" class="sendMsgBtn">发送(s)</button>
+                        <button class="sendMsgBtn">发送(s)</button>
                     </div>
                 </form>
             </div>
         </div>
         <!-- 右侧边栏 -->
-        <div class="chat-right col-xs-3 col-sm-3 col-md-3" id="chatSidebar">
-            <!--  -->
+        <div class="chat-right" id="chatSidebar">
             <div class="chat-right-top">
                 <h4 class="chat-title">
                     <span id="PersonInfo">用户信息</span>
                 </h4>
                 <button type="button" class="close" id="ifm-close">&times;</button>
             </div>
-            <!-- 左侧边栏顶部搜索框 -->
             <div class="currentUser">
                 <!--当前用户头像-->
-                <a class="currentUserImg">
-                    <img src="img/user.jpg" class="cursor-pointer">
-                </a>
+                <div class="changeAvatar">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle" width="80">
+                </div>
                 <span class="currentUserAccount">八百斤鸭</span>
-
             </div>
-
-    </div>
+            <div class="userInfo">
+                <row style="width:100%; display: flex; margin: 0px 0px 20px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>ID</strong>
+                    </column>
+                    <column>
+                        <span>Duck_800</span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <strong>性别</strong>
+                    </column>
+                    <column>
+                        <strong>地区</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <span>女</span>
+                    </column>
+                    <column>
+                        <span>江苏 南通</span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;margin: 5px 0px 0px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>生日</strong>
+                    </column>
+                    <column>
+                        <strong>星座</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <span>2003-09-29</span>
+                    </column>
+                    <column>
+                        <span>天秤座</span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex; margin: 20px 0px 0px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>个性签名</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 100%">
+                        <span>一枚脆弱而精致的软工大三学生。</span>
+                    </column>
+                </row>
+            </div>
+            <div>
+                <!-- 发送消息的按钮 -->
+                <button  class = "InfoBtn">修改信息</button>
+            </div>
+        </div>
 </div>
 
-<script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 <script src="dist/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/custom-scripts.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-confirm/jquery-confirm.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/lib/js/emojione.min.js"></script>
-<script type="text/javascript" src="dist/js/emojionearea.min.js"></script>
+<script type="text/javascript" src="dist/js/emojionearea.js"></script>
 <script>
     $(function () {
         $(document).tooltip();

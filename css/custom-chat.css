@@ -27,17 +27,29 @@
     inset 0 -3px 2px rgba(0, 0, 0, 0.25);
 }
 
+.sideBar {
+    height: 100%;
+    width: 4%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-right: 1px solid #eeeeee;
+    background-color: #fafafa;
+  }
+
 /*-------------------------
 	聊天窗口左侧部分
 --------------------------*/
 .chat-left {
-    min-width: 260px;
-    max-width: 320px;
     height: 100%;
-    padding: 0;
-    background: #e5e5e5;
+    width:23%;
+    position:absolute;
+    left:4%;
+    top:0%;
     display: flex;
+
     flex-flow: column;
+    border-right:1px solid #eeeeee;
 }
 
 #sidebarBtn {
@@ -60,43 +72,18 @@
     }
 }
 
-/*@media (min-width: 992px) {*/
-/*.container {*/
-/*width: 980px*/
-/*}*/
-/*}*/
-
-.chat-left > .currentUser {
+.currentUser {
     width: 100%;
-    padding: 20px 15px 0px;
-    display: flex;
-    align-items: center;
-    position: relative;
-
+    padding: 8px;
 }
 
-.chat-left > .currentUser > .currentUserImg {
-    width: 55px;
-    height: 55px;
-    display: inline-flex;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-.chat-left > .currentUser > .currentUserAccount {
-    display: inline-block;
-    margin-left: 15px;
-    font-size: 18px;
-    font-weight: 600;
-    font-family: "苹方", "微软雅黑", sans-serif;
-    width: 50%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
+.logo{
+    width: 100%;
+    height:7%;
+    text-align:center;
+    display: flex; /* 设置为一个 flex 容器 */
+    justify-content: center; /* 水平居中对齐元素 */
+    align-items: center; /* 垂直居中对齐元素 */
 }
 
 .currentUserImg > img {
@@ -116,12 +103,11 @@
 }
 
 .chat-left > .chat-left-top {
-    width: 100%;
-    min-height: 65px;
+    width: 98%;
+    min-height: 60px;
     display: flex;
     align-items: center;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .chat-top-form {
@@ -144,14 +130,13 @@
 }
 
 .chat-left > .chat-left-top .addFriendBtn {
-    background-color: #d2d0cf;
-    outline: none;
-    box-shadow: 0 0 0 transparent !important;
+    background-color: #eeeeee;
     vertical-align: center;
     height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border-radius: 10px;
 }
 
 .chat-left > .chat-left-top .addFriendBtn:hover {
@@ -162,7 +147,6 @@
 .chat-left > .chat-left-top .addFriendBtn > i {
     display: block;
     color: #999;
-
 }
 
 .chat-left > .chat-left-top .addFriendBtn:hover > i {
@@ -171,16 +155,17 @@
 }
 
 .search-input {
-    background-color: #d2d0cf;
-    border: 0;
-    outline: none;
+    background-color: #eeeeee;
+    border-radius:10px;
+    border-color:transparent;
     padding: 0 35px;
     cursor: pointer;
+
     box-shadow: 0 0 0 transparent !important;
 }
 
 .search-input:hover {
-    background-color: #c3c1c0;
+    background-color: #eeeeee;
     cursor: pointer;
 }
 
@@ -205,7 +190,6 @@
 .friend-list > li {
     width: 100%;
     position: relative;
-    border-bottom: 1px solid #e7e7e2;
 }
 
 .friend-list > li > a {
@@ -229,17 +213,10 @@
     color: black;
 }
 
-.friend-list .users-img {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    margin-right: 15px;
-    border: 1px solid #ddd;
-}
-
-.friend-list .friendName {
+.friendName {
     width: 180px;
     text-align: left;
+    padding-left:15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -303,28 +280,39 @@
 --------------------------*/
 .chat-central {
     flex: 1;
-    background-color: #f5f5f5;
     height: 100%;
+    width:55%;
+    position:absolute;
+    left:23%;
+    top:0%;
     display: flex;
     flex-flow: column;
     overflow: hidden;
     position: relative;
+    border-right:1px solid #eeeeee;
 }
 
 .chat-central > .chat-central-top {
     width: 100%;
     min-height: 65px;
-    background-color: #f5f5f5;
     height: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    margin-left:5px;
 }
 
-.chat-central-top > .chat-title {
-    font-size: 20px;
+.users-img {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.ChatUser-img{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 1px solid #ddd;
 }
 
 
@@ -334,19 +322,8 @@
 .chat-central > .chat-show {
     height: 100%;
     width: 100%;
-    border-top: 1px solid #ddd;
-    padding: 30px 25px 20px;
-    background-color: #fff;
-}
-
-/*-------------------------
-	消息显示区域 - 用户头像
---------------------------*/
-.chat-show .users-img {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #eaeaea;
 }
 
 /*-------------------------
@@ -354,36 +331,28 @@
 --------------------------*/
 
 .my-msg-qipao, .friend-msg-qipao {
-    border-radius: 5px;
+    border-radius: 10px;
     display: inline-block;
     width: auto;
-    padding: 10px 12px 12px;
+    padding: 10px 15px 10px 15px;
     position: relative;
-}
-
-.friend-msg-qipao {
     background-color: #fff;
-    border: 1px solid #ddd
-}
-
-.my-msg-qipao {
-    background-color: #E9EAEE;
-    border: 1px solid #d2d2d2
 }
 
 .friend-msg {
     display: flex;
     align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: 15px;
-
 }
 
 .my-msg {
     display: flex;
     align-items: center;
+    align-items: flex-start;
     justify-content: flex-end;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /*-------------------------
@@ -443,21 +412,21 @@
 --------------------------*/
 .chat-right {
     flex-basis:20%;
-    background-color: #f5f5f5;
     height: 100%;
+    width:18%;
+    position:absolute;
+    right:0%;
+    top:0%;
     display: flex;
     flex-flow: column; 
     overflow: hidden;
-    position: relative;
+    padding:0 15px 0 15px;
 }
 
 .chat-right > .chat-right-top {
     width: 100%;
-    min-height: 65px;
-    background-color: #f5f5f5;
-    height: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
+    height: 65px;
+    padding-left: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -470,22 +439,19 @@
 
 .chat-right > .currentUser {
     width: 100%;
-    padding: 20px 15px 0px;
+    padding: 10px 0px 0px 0px;
     display: flex;
     align-items: center;
-    position: relative;
 
 }
 
-.chat-right > .currentUser > .currentUserImg {
-    width: 55px;
-    height: 55px;
-    display: inline-flex;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+.chat-right > .currentUser > .changeAvatar{
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-right > .currentUser > .changeAvatar > .changebtn{
+    margin: 5px 0px 0px 0px;
 }
 
 .chat-right > .currentUser > .currentUserAccount {
@@ -501,6 +467,15 @@
 
 }
 
+.chat-right > .userInfo {
+    width:100%;
+    margin:20px 0px 0px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size:14px;
+}
+
 .currentUserImg > img {
     width: 100%;
     height: auto;
@@ -511,6 +486,18 @@
     right: 10px;
     top: auto;
     bottom: auto;
+}
+
+.InfoBtn{
+    position:absolute;
+    left:35%;
+    bottom:5%;
+    padding:3px 10px 3px 10px;
+    color:#27ae60;
+    background-color: #fff;
+    border-radius: 10px;
+    border-color: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -568,8 +555,12 @@
     position: absolute;
     bottom:50%;
     right:3%;
-    padding:3px;
-    outline: none;
+    padding:3px 10px 3px 10px;
+    color:#27ae60;
+    background-color: #fff;
+    border-radius: 10px;
+    border-color: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .alertTips {
@@ -595,10 +586,6 @@
     left: 10px;
     color: #999;
     font-size: 14px;
-}
-
-.mySearch + .form-control {
-    padding: 0 30px;
 }
 
 .search-result-wrap {
