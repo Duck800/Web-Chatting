@@ -47,7 +47,6 @@ body:after{
     text-transform:uppercase;
     padding: 5px;
     margin: 30px 0 0;
-    color: rgba(99, 64, 86, 0.85);
 }
 
 .bg-main{
@@ -71,8 +70,6 @@ body:after{
     text-align: center;
     padding: 0;
     height: 42px;
-    border: 3px solid #ebe6e2;
-    background-color: #ebe6e2;
     border-radius: 5px;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
@@ -90,16 +87,9 @@ body:after{
 .formBtn{
     width: 100%;
     padding: 7px 5px;
-
-    background: #634056;
-    background: -moz-linear-gradient(rgba(99, 64, 86, 0.5), rgba(76, 49, 65, 0.7));
-    background: -ms-linear-gradient(rgba(99, 64, 86, 0.5), rgba(76, 49, 65, 0.7));
-    background: -o-linear-gradient(rgba(99, 64, 86, 0.5), rgba(76, 49, 65, 0.7));
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(99, 64, 86, 0.5)), to(rgba(76, 49, 65, 0.7)));
-    background: -webkit-linear-gradient(rgba(99, 64, 86, 0.5), rgba(76, 49, 65, 0.7));
-    background: linear-gradient(rgba(99, 64, 86, 0.5), rgba(76, 49, 65, 0.7));
-    border-radius: 5px;
-    border: 1px solid #4e3043;
+    background: #27ae60;
+    border-radius: 20px;
+    border-color: transparent;
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 2px 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     -webkit-transition: all 0.3s ease-out;
@@ -120,7 +110,7 @@ body:after{
 .formBtn:hover,
 .formBtn:focus{
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.2),
-    inset 0 20px 30px rgba(99, 64, 86, 0.5);
+
 }
 
 
