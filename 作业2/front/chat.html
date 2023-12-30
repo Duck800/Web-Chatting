@@ -27,10 +27,10 @@
     <input type="hidden" id="UserId" value="1" />
 
     <!-- 当前用户名 -->
-    <input type="hidden" id="UserAccount" value="Earthshaking" />
+    <input type="hidden" id="UserAccount" value="八百斤鸭" />
 
     <!-- 当前用户密码 -->
-    <input type="hidden" id="UserPassword" value="12345" />
+    <input type="hidden" id="UserPassword" value="0929Sunhanya" />
 
     <!-- 当前用户头像 -->
     <input type="hidden" id="UserImg" value="img/user.jpg" />
@@ -50,10 +50,9 @@
             <div class="currentUser">
                 <!--当前用户头像-->
                 <a class="currentUserImg" id="sidebarToggleBtn">
-                    <img src="img/user.jpg" class="cursor-pointer img-circle" data-toggle="dropdown">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle">
                 </a>
             </div>
-
         </div>
         <!-- 左侧边栏 -->
         <div class="chat-left" id="chatSidebar">
@@ -78,7 +77,7 @@
         </div>
 
         <!-- 右侧聊天窗口 -->
-        <div class="chat-central">
+        <div class="chat-central" id="chat-central">
             <div class="chat-central-top">
                 <!-- 聊天icon -->
                 <!-- <button class="btn btn-link a-none" id="sidebarBtn">
@@ -94,46 +93,6 @@
             <!-- 消息显示 -->
             <div class="chat-show my-panel-diy">
 
-                <!-- 自己发的消息 -->
-                <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">孙韩雅</span>
-                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
-                    <input class="NowTime" value="2018/07/01 07:15:59" type="hidden" />
-                </div>
-
-                <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">还在写代码？</span>
-                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
-                    <input class="NowTime" value="2018/07/01 07:18:59" type="hidden" />
-                </div>
-
-                <!-- 对方发的消息 -->
-                <div class="friend-msg per100 fadeInDown msg">
-                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
-                    <span class="friend-msg-qipao">对啊，我刚写了个聊天页面</span>
-                    <input class="NowTime" value="2018/07/01 08:21:59" type="hidden" />
-                </div>
-
-                <!-- 自己发的消息 -->
-                <div class="my-msg per100 fadeInUp msg">
-                    <span class="my-msg-qipao">啥样的</span>
-                    <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
-                    <input class="NowTime" value="2018/07/05 06:12:59" type="hidden" />
-                </div>
-                <!-- 对方发的消息 -->
-                <div class="friend-msg per100 fadeInDown msg">
-                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
-                    <img src="img/UIDesign.png" style="width:400px;border-radius:5px;" />
-                    <input class="NowTime" value="2018/07/08 08:18:59" type="hidden" />
-                </div>
-
-                <!-- 对方发的消息 -->
-                <div class="friend-msg per100 fadeInDown msg">
-                    <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
-                    <span class="friend-msg-qipao">这是设计图</span>
-                    <input class="NowTime" value="2018/07/08 08:18:59" type="hidden" />
-                </div>
-
             </div>
             <!-- 输入消息区域 -->
             <div class="chat-input">
@@ -145,7 +104,7 @@
                     <div class="form-group m0 pr15 pb15 pt5 white-bg relative">
                         <!-- 发送消息的按钮 -->
                         <span class="alertTips">不能发送空的消息</span>
-                        <button class="sendMsgBtn" id="sendMsgBtn">发送(s)</button>
+                        <button type="button" class="sendMsgBtn" id="sendMsgBtn">发送(s)</button>
                         <div class="clearfix"></div>
                     </div>
                 </form>
@@ -164,7 +123,7 @@
                 <div class="changeAvatar">
                     <img src="img/user.jpg" class="cursor-pointer img-circle" width="80">
                 </div>
-                <span class="currentUserAccount">八百斤鸭</span>
+                <span class="currentUserAccount" id="Info-name"></span>
             </div>
             <div class="userInfo">
                 <row style="width:100%; display: flex; margin: 0px 0px 20px 0px;">
@@ -172,7 +131,7 @@
                         <strong>ID</strong>
                     </column>
                     <column>
-                        <span>Duck_800</span>
+                        <span id="Info-id"></span>
                     </column>
                 </row>
                 <row style="width:100%; display: flex;">
@@ -185,10 +144,10 @@
                 </row>
                 <row style="width:100%; display: flex;">
                     <column style="flex-basis: 50%">
-                        <span>女</span>
+                        <span id="Info-sex"></span>
                     </column>
                     <column>
-                        <span>江苏 南通</span>
+                        <span id="Info-area"></span>
                     </column>
                 </row>
                 <row style="width:100%; display: flex;margin: 5px 0px 0px 0px;">
@@ -201,10 +160,10 @@
                 </row>
                 <row style="width:100%; display: flex;">
                     <column style="flex-basis: 50%">
-                        <span>2003-09-29</span>
+                        <span id="Info-birth"></span>
                     </column>
                     <column>
-                        <span>天秤座</span>
+                        <span id="Info-costellation"></span>
                     </column>
                 </row>
                 <row style="width:100%; display: flex; margin: 20px 0px 0px 0px;">
@@ -214,7 +173,7 @@
                 </row>
                 <row style="width:100%; display: flex;">
                     <column style="flex-basis: 100%">
-                        <span>一枚脆弱而精致的软工大三学生。</span>
+                        <span id="Info-sentence"></span>
                     </column>
                 </row>
             </div>
@@ -309,7 +268,7 @@
     </div>
 
 
-    <script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="dist/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/custom-scripts.js" type="text/javascript" charset="utf-8"></script>
@@ -317,8 +276,9 @@
     <script src="js/jquery-confirm/jquery-confirm.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/lib/js/emojione.min.js"></script>
-    <script type="text/javascript" src="dist/js/emojionearea.min.js"></script>
+    <script type="text/javascript" src="./dist/js/emojionearea.min.js"></script>
     <script src="./js/friends/info.js"></script>
+    <script src="./js/friends/chatData.js"></script>
     <script>
         // 页面全部加载完成后 loading动画消失
         window.onload = function () {
@@ -352,7 +312,138 @@
             $("#userInfoAccount").text(thisUser.name);
             $("#userInfoPassword").val(thisUser.password);
 
+            // 从本地存储中获取好友信息数组
+            var friends = JSON.parse(localStorage.getItem('friendsInfo'));
+            // 初始化所有好友
+            var initFriends = function () {
+                var friendNode = "";
+                for (var i = 0; i < friends.length; i++) {
+                    friendNode += '<li>' +
+                        '    <a class="a-none friend" href="javascript:void(null);">' +
+                        '        <img src="' + friends[i].avatar + '" class="users-img cursor-pointer img-circle friendavatar">' +
+                        '        <span class="friendName s15 strong">' + friends[i].name + '</span>' +
+                        '    </a>' +
+                        '    <div class="dropdown">' +
+                        '        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">' +
+                        '            <i class="icon-dots-horizontal-triple s20"></i>' +
+                        '        </button>' +
+                        '        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">' +
+                        '            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal" data-target="#confirmDelete">删除好友</a></li>' +
+                        '        </ol>' +
+                        '    </div>' +
+                        '</li>';
+                }
+                $("#left-friend-list").append(friendNode);
+            };
+            initFriends();
+
+            // 假设有一个根据姓名获取好友信息的函数
+            var getFriendInfoByName = function (name) {
+                // 在这里根据具体实现，返回对应姓名的好友信息
+                // 例如可以遍历一个好友信息数组，找到对应姓名的好友信息后返回
+
+                for (var i = 0; i < friendsInfo.length; i++) {
+                    if (friendsInfo[i].name === name) {
+                        friendInfo = friendsInfo[i];
+                        break;
+                    }
+                }
+                return friendInfo;
+            };
+
             var chatShow = $(".chat-show");
+
+            var chatData = localStorage.getItem('chatData');
+            if (!chatData) {
+                chatData = [];
+            } else {
+                chatData = JSON.parse(chatData);
+            }
+
+            function switchFriend(userName) {
+                // 获取聊天显示区域的元素
+                const chatShowDiv = document.querySelector(".chat-show");
+                // 清空聊天显示区域
+                chatShowDiv.innerHTML = "";
+
+                // 遍历对话记录，根据发送者显示消息
+                const conversation = chatData[userName];
+                if (conversation && conversation.length > 0) {
+                    for (let i = 0; i < conversation.length; i++) {
+                        const { sender, message: msg, timestamp } = conversation[i];
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("msg");
+
+                        if (sender === thisUser.name) {
+                            msgDiv.innerHTML = `
+                      ${isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 500px;" />` : `<span class="my-msg-qipao">${msg}</span>`}
+                      <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
+                      <input class="NowTime" value="${timestamp}" type="hidden" />
+                    `;
+                            msgDiv.classList.add("my-msg", "fadeInUp");
+                        } else if (sender === userName) {
+                            msgDiv.innerHTML = `
+                      <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+                      ${isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 400px;border-radius:10px;" />` : `<span class="friend-msg-qipao">${msg}</span>`}
+                      <input class="NowTime" value="${timestamp}" type="hidden" />
+                    `;
+                            msgDiv.classList.add("friend-msg", "fadeInDown");
+                        }
+
+                        chatShowDiv.appendChild(msgDiv);
+                    }
+                }
+            }
+            function isImage(url) {
+                return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+            }
+
+
+
+            var currentFriend = friendsInfo[0].name;
+
+            // 点击左侧好友列表
+            // 获取所有好友节点
+            var friendNodes = document.querySelectorAll("#left-friend-list li");
+
+            friendNodes.forEach(function (friendNode) {
+
+                friendNode.addEventListener("click", function (e) {
+                    // 阻止默认的链接跳转行为
+                    e.preventDefault();
+
+                    // 获取当前点击的好友名字
+                    var currentFriend = this.querySelector('.friendName').textContent;
+                    //$('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
+                    //chatShow.html(""); // 刷新/清空聊天窗口
+                    $(this).siblings().children('a.friend').removeClass('active');
+                    $(this).find('a.friend').addClass('active');// 添加点击效果
+
+                    // 根据好友姓名获取该好友信息
+                    var friendInfo = getFriendInfoByName(currentFriend);
+
+                    // 获取要替换的元素
+                    const changeAvatarElem = document.querySelector('.changeAvatar img');
+                    const InfoName = document.getElementById('Info-name');
+                    const InfoId = document.getElementById('Info-id');
+                    const InfoSex = document.getElementById('Info-sex');
+                    const InfoArea = document.getElementById('Info-area');
+                    const InfoBirth = document.getElementById('Info-birth');
+                    const InfoCostellation = document.getElementById('Info-costellation');
+                    const InfoSentence = document.getElementById('Info-sentence');
+
+                    // 替换头像路径
+                    changeAvatarElem.src = friendInfo.avatar;
+                    InfoName.textContent = friendInfo.name;
+                    InfoId.textContent = friendInfo.id;
+                    InfoSex.textContent = friendInfo.gender;
+                    InfoArea.textContent = friendInfo.area;
+                    InfoBirth.textContent = friendInfo.birth;
+                    InfoCostellation.textContent = friendInfo.costellation;
+                    InfoSentence.textContent = friendInfo.sentence;
+                });
+
+            });
 
             // 表情插件初始化
             $("#chat-textarea").emojioneArea({
@@ -391,7 +482,6 @@
                 var msgNode = "";
 
                 if (msgVal != "") {
-
                     // 生成发送的消息
                     msgNode += "<span class='my-msg-qipao'>" + msgVal + "</span>" +
                         "       <img src='" + thisUser.img + "' class='users-img cursor-pointer ml20 img-circle'>" +
@@ -404,6 +494,32 @@
                     var scrollTopPx = $(".chat-show")[0].scrollHeight;
                     chatShow.animate({ scrollTop: scrollTopPx }, 500); // 会话窗口滚动到最底部
                     $(".emojionearea-editor").html("");// 清空会话窗口
+
+                    // 从本地存储中获取聊天记录表，如果不存在则创建一个空表
+                    const chatDataStr = localStorage.getItem("chatData");
+                    let chatData = {};
+
+                    if (chatDataStr) {
+                        chatData = JSON.parse(chatDataStr);
+                    }
+
+                    // 获取对应好友的聊天记录数组，如果不存在则创建一个新的空数组
+                    let friendChatHistory = chatData[currentFriend];
+
+                    if (!friendChatHistory) {
+                        friendChatHistory = [];
+                    }
+                    // 创建一个消息对象，包括消息的发送者、内容和时间戳
+                    const newMessage = {
+                        sender: thisUser.name,
+                        message: msgVal,
+                        timestamp: new Date().toISOString()
+                    };
+                    // 将消息对象推入对应好友的聊天记录数组中
+                    friendChatHistory.push(newMessage);
+                    // 更新本地存储的聊天记录表数据
+                    chatData[currentFriend] = friendChatHistory;
+                    localStorage.setItem("chatData", JSON.stringify(chatData));
 
                 } else {
 
@@ -419,46 +535,12 @@
             // 获取按钮和侧边栏元素
             const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
             const infoSidebar = document.getElementById('infoSidebar');
-
             // 点击事件处理函数
             function toggleSidebar() {
                 infoSidebar.classList.toggle('show');
             }
-
             // 绑定点击事件监听器
             sidebarToggleBtn.addEventListener('click', toggleSidebar);
-
-            // 好友列表
-            var friends = friendsInfo.map(friend => {
-                return {
-                    id: friend.id,
-                    img: friend.avatar,
-                    name: friend.name
-                }
-            });
-
-            // 初始化所有好友
-            var initFriends = function () {
-                var friendNode = "";
-                for (var i = 0; i < friends.length; i++) {
-                    friendNode += '<li>' +
-                        '    <a class="a-none friend" href="javascript:void(null);">' +
-                        '        <img src="' + friends[i].img + '" class="users-img cursor-pointer img-circle">' +
-                        '        <span class="friendName s15 strong">' + friends[i].name + '</span>' +
-                        '    </a>' +
-                        '    <div class="dropdown">' +
-                        '        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">' +
-                        '            <i class="icon-dots-horizontal-triple s20"></i>' +
-                        '        </button>' +
-                        '        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">' +
-                        '            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal" data-target="#confirmDelete">删除好友</a></li>' +
-                        '        </ol>' +
-                        '    </div>' +
-                        '</li>';
-                }
-                $("#left-friend-list").append(friendNode);
-            };
-            initFriends();
 
             // 搜索用户框
             var searchUsers = $("#search-users");
@@ -557,19 +639,6 @@
                 }
             });
 
-            // 点击左侧好友列表
-            $(".chat-left").find("#left-friend-list li").click(function () {
-                $(this).find('a.friend').addClass('active');// 添加点击效果
-
-                var currentFriend = $(this).find('.friendName').text(); // 获取点击的好友用户名
-
-                $('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
-
-                chatShow.html(""); // 刷新/清空聊天窗口
-
-                $(this).siblings().children('a.friend').removeClass('active');
-            });
-
             // 点击删除好友
             $(".deleteFriendBtn").on("click", function () {
                 var friendNames = $(this).parents('li').find('.friendName').text();
@@ -622,8 +691,6 @@
                 for (var q = 0; q < ux.length; q++) {
                     chatShow.append(ux[q].dom);
                 }
-
-
             };
 
             msgSort();

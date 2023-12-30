@@ -75,6 +75,7 @@
 <script src="js/custom-scripts.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/mustache.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-confirm/jquery-confirm.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/user.js"></script>
 <script>
     // 切换表单
     function toggleForm() {
@@ -100,24 +101,6 @@
         });
     }
 
-    // 创建并初始化用户
-    function createUser(username, password) {
-        // 创建用户对象
-        const user = {
-            username: username,
-            password: password,
-            isLoggedIn: false
-        };
-        // 将用户信息保存到 localStorage
-        localStorage.setItem(username, JSON.stringify(user));
-        console.log(`用户 ${username} 创建成功！`);
-    }
-
-    // 创建并初始化用户
-    createUser("八百斤鸭", "0929Sunhanya");
-    createUser("登山花椒", "111");
-    createUser("test", "1");
-
     // 登录逻辑
     const loginForm = document.getElementById('login-form'); // 获取登录表单元素
     loginForm.addEventListener('submit', function (event) {
@@ -126,8 +109,11 @@
         const username = document.getElementById('login-username').value; // 获取用户名输入框的值
         const password = document.getElementById('login-password').value; // 获取密码输入框的值
 
-        const user = JSON.parse(localStorage.getItem(username));
-        // 从 localStorage 中获取存储的用户对象
+        const userTable = JSON.parse(localStorage.getItem('userTable'));
+        // 从 localStorage 中获取存储的用户表
+
+        const user = userTable.find(user => user.name === username);
+        // 在用户表中查找与输入的用户名匹配的用户
 
         if (user && user.password === password) {
             // 用户存在且密码匹配，登录成功
@@ -155,12 +141,29 @@
             alert('用户名已存在，请选择其他用户名！');
         } else {
             // 用户名可用，创建新用户对象
-            const newUser = {
+            // 创建新用户对象
+            var newUser = {
+                password:password,
                 name: username,
-                password: password
+                avatar: './img/user.jpg',
+                id:"请设置",
+                gender: "未知",
+                area: "未知",
+                birth: "未知",
+                costellation: "未知",
+                sentence: "未知"
             };
-            localStorage.setItem(username, JSON.stringify(newUser));
-            // 将新用户存储到 localStorage 中
+
+            // 获取用户表
+            var userTable = JSON.parse(localStorage.getItem('userTable'));
+            // 如果用户表不存在，则创建一个空数组
+            if (!userTable) {
+                userTable = [];
+            }
+            // 将新用户添加到已注册的用户列表中
+            userTable.push(newUser);
+            // 存储更新后的用户列表到本地存储
+            localStorage.setItem('userTable', JSON.stringify(userTable));
 
             alert('注册成功！');
             toggleForm();
