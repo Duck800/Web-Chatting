@@ -1,0 +1,12 @@
+.login-page{
+    background-image: url('../img/login.png');
+    background-size: cover;
+    height:100%;
+    width:100%;
+}
+
+.login-form{
+    position: absolute;
+    top:18%;
+    right:14.5%;
+}

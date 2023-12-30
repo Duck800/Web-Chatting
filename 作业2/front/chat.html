@@ -50,7 +50,7 @@
             <div class="currentUser">
                 <!--当前用户头像-->
                 <a class="currentUserImg" id="sidebarToggleBtn">
-                    <img src="img/user.jpg" class="cursor-pointer img-circle" data-toggle="dropdown" >
+                    <img src="img/user.jpg" class="cursor-pointer img-circle" data-toggle="dropdown">
                 </a>
             </div>
 
@@ -74,66 +74,6 @@
                 style="margin:5px auto 0px;border:0.5px solid rgba(0,0,0,0.08);box-shadow: 0 1px 0px rgba(245,245,245,.6)" /> -->
             <!-- 好友列表 -->
             <ul class="friend-list" id="left-friend-list">
-                <li>
-                    <a class="a-none friend" href="javascript:void(null);">
-                        <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">
-                        <span class="friendName s15 strong">登山花椒</span>
-                    </a>
-                    <div class="dropdown">
-                        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-dots-horizontal-triple s20"></i>
-                        </button>
-                        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">
-                            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
-                                    data-target="#confirmDelete">删除好友</a></li>
-                        </ol>
-                    </div>
-                </li>
-                <li>
-                    <a class="a-none friend" href="javascript:void(null);">
-                        <img src="img/img-2.jpg" class="users-img cursor-pointer img-circle">
-                        <span class="friendName s15 strong">南梦之泽</span>
-                    </a>
-                    <div class="dropdown">
-                        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-dots-horizontal-triple s20"></i>
-                        </button>
-                        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">
-                            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
-                                    data-target="#confirmDelete">删除好友</a></li>
-                        </ol>
-                    </div>
-                </li>
-                <li>
-                    <a class="a-none friend" href="javascript:void(null);">
-                        <img src="img/img-3.jpg" class="users-img cursor-pointer img-circle">
-                        <span class="friendName s15 strong">Heelift</span>
-                    </a>
-                    <div class="dropdown">
-                        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-dots-horizontal-triple s20"></i>
-                        </button>
-                        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">
-                            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
-                                    data-target="#confirmDelete">删除好友</a></li>
-                        </ol>
-                    </div>
-                </li>
-                <li>
-                    <a class="a-none friend" href="javascript:void(null);">
-                        <img src="img/img-4.jpg" class="users-img cursor-pointer img-circle">
-                        <span class="friendName s15 strong">AAA彩电维修</span>
-                    </a>
-                    <div class="dropdown">
-                        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-dots-horizontal-triple s20"></i>
-                        </button>
-                        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">
-                            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
-                                    data-target="#confirmDelete">删除好友</a></li>
-                        </ol>
-                    </div>
-                </li>
             </ul>
         </div>
 
@@ -363,7 +303,7 @@
                     <button class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title s14"><i class="icon-image mr5 s15"></i>修改头像</h4>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -378,6 +318,7 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/lib/js/emojione.min.js"></script>
     <script type="text/javascript" src="dist/js/emojionearea.min.js"></script>
+    <script src="./js/friends/info.js"></script>
     <script>
         // 页面全部加载完成后 loading动画消失
         window.onload = function () {
@@ -488,29 +429,36 @@
             sidebarToggleBtn.addEventListener('click', toggleSidebar);
 
             // 好友列表
-            var friends = [
-                { id: 1, img: "img/img-1.jpg", name: "张三" },
-                { id: 2, img: "img/img-2.jpg", name: "李四" },
-                { id: 3, img: "img/img-3.jpg", name: "王五" },
-                { id: 4, img: "img/img-4.jpg", name: "赵孙" },
-                { id: 5, img: "img/img-5.jpg", name: "小强" },
-                { id: 6, img: "img/img-3.jpg", name: "武松" }
-            ];
+            var friends = friendsInfo.map(friend => {
+                return {
+                    id: friend.id,
+                    img: friend.avatar,
+                    name: friend.name
+                }
+            });
 
             // 初始化所有好友
             var initFriends = function () {
                 var friendNode = "";
                 for (var i = 0; i < friends.length; i++) {
-                    friendNode += "<li><a class=\"a-none\" href=\"javascript:void(null);\">\n" +
-                        "                    <input class=\"friendId\" type=\"hidden\" value=\"" + friends[i].id + "\"/>\n" +
-                        "                    <img src=\"" + friends[i].img + "\" class=\"users-img cursor-pointer img-circle\">\n" +
-                        "                    <span class=\"friendName s15 strong\">" + friends[i].name + "</span>\n" +
-                        "                </a></li>";
+                    friendNode += '<li>' +
+                        '    <a class="a-none friend" href="javascript:void(null);">' +
+                        '        <img src="' + friends[i].img + '" class="users-img cursor-pointer img-circle">' +
+                        '        <span class="friendName s15 strong">' + friends[i].name + '</span>' +
+                        '    </a>' +
+                        '    <div class="dropdown">' +
+                        '        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">' +
+                        '            <i class="icon-dots-horizontal-triple s20"></i>' +
+                        '        </button>' +
+                        '        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">' +
+                        '            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal" data-target="#confirmDelete">删除好友</a></li>' +
+                        '        </ol>' +
+                        '    </div>' +
+                        '</li>';
                 }
                 $("#left-friend-list").append(friendNode);
             };
-
-            // initFriends();
+            initFriends();
 
             // 搜索用户框
             var searchUsers = $("#search-users");
