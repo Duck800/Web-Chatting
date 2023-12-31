@@ -71,8 +71,8 @@
                     <i class="icon-navicon s20"></i>
                 </button> -->
                 <a class="a-none friend" href="javascript:void(null);">
-                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">
-                    <span class="friendName s15 strong">登山花椒</span>
+                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle" id="chatTopImg">
+                    <span class="friendName s15 strong" id="chatTopName">登山花椒</span>
                 </a>
                 <!-- <button type="button" class="close" id="ifm-close">&times;</button> -->
             </div>
@@ -304,7 +304,6 @@
             var getFriendInfoByName = function (name) {
                 // 在这里根据具体实现，返回对应姓名的好友信息
                 // 例如可以遍历一个好友信息数组，找到对应姓名的好友信息后返回
-
                 for (var i = 0; i < friendsInfo.length; i++) {
                     if (friendsInfo[i].name === name) {
                         friendInfo = friendsInfo[i];
@@ -315,22 +314,17 @@
             };
 
             var chatShow = $(".chat-show");
+            
+            var currentFriend = friendsInfo[0];
 
-            var chatData = localStorage.getItem('chatData');
-            if (!chatData) {
-                chatData = [];
-            } else {
-                chatData = JSON.parse(chatData);
-            }
-
-            function switchFriend(userName) {
+            function switchFriend(userInfo) {
                 // 获取聊天显示区域的元素
                 const chatShowDiv = document.querySelector(".chat-show");
                 // 清空聊天显示区域
                 chatShowDiv.innerHTML = "";
 
                 // 遍历对话记录，根据发送者显示消息
-                const conversation = chatData[userName];
+                const conversation = chatData[userInfo.name];
                 if (conversation && conversation.length > 0) {
                     for (let i = 0; i < conversation.length; i++) {
                         const { sender, message: msg, timestamp } = conversation[i];
@@ -344,9 +338,9 @@
                       <input class="NowTime" value="${timestamp}" type="hidden" />
                     `;
                             msgDiv.classList.add("my-msg", "fadeInUp");
-                        } else if (sender === userName) {
+                        } else if (sender === userInfo.name) {
                             msgDiv.innerHTML = `
-                      <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+                      <img src="${userInfo.avatar}" class="ChatUser-img mr20 cursor-pointer img-circle">
                       ${isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 400px;border-radius:10px;" />` : `<span class="friend-msg-qipao">${msg}</span>`}
                       <input class="NowTime" value="${timestamp}" type="hidden" />
                     `;
@@ -360,7 +354,6 @@
                 return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
             }
 
-            var currentFriend = friendsInfo[0].name;
             //初始化消息页面
             switchFriend(currentFriend);
 
@@ -371,19 +364,16 @@
                 friendNode.addEventListener("click", function (e) {
                     // 阻止默认的链接跳转行为
                     e.preventDefault();
-                    toggleSidebar();
 
                     // 获取当前点击的好友名字
-                    var currentFriend = this.querySelector('.friendName').textContent;
+                    var currentFriend = getFriendInfoByName(this.querySelector('.friendName').textContent);
                     //$('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
                     //chatShow.html(""); // 刷新/清空聊天窗口
                     $(this).siblings().children('a.friend').removeClass('active');
                     $(this).find('a.friend').addClass('active');// 添加点击效果
 
-                    // 根据好友姓名获取该好友信息
-                    var friendInfo = getFriendInfoByName(currentFriend);
-                    switchInfo(friendInfo);
-                    switchFriend(friendInfo.name);
+                    switchInfo(currentFriend);
+                    switchFriend(currentFriend);
 
                     // 点击删除好友
                     $(".deleteFriendBtn").on("click", function () {
@@ -394,7 +384,7 @@
                             // 找到要删除的朋友
                             // 在friendInfo中移除friendToDelete
                             friendsInfo = friendsInfo.filter(function (friend) {
-                                return friend.name !== currentFriend;
+                                return friend.name !== currentFriend.name;
                             });
 
                             // 更新friendInfo并将其存回localStorage
@@ -416,6 +406,9 @@
                 const InfoCostellation = document.getElementById('Info-costellation');
                 const InfoSentence = document.getElementById('Info-sentence');
 
+                const chatTopName = document.getElementById('chatTopName');
+                const chatTopImg = document.getElementById('chatTopImg');
+
                 // 替换头像路径
                 changeAvatarElem.src = Info.avatar;
                 InfoName.textContent = Info.name;
@@ -425,6 +418,9 @@
                 InfoBirth.textContent = Info.birth;
                 InfoCostellation.textContent = Info.costellation;
                 InfoSentence.textContent = Info.sentence;
+
+                chatTopName.textContent = Info.name;
+                chatTopImg.src = Info.avatar;
             }
 
             // 表情插件初始化
@@ -519,7 +515,7 @@
 
             // 点击事件处理函数
             function toggleSidebar() {
-                infoSidebar.classList.toggle('show');
+                
                 switchInfo(currentUser)
             }
 

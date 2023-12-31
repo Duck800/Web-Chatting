@@ -50,8 +50,21 @@
                         <i class="icon-search"></i>
                         <input class="form-control search-input per85 mr5 pull-left" type="text" placeholder="搜索"
                             id="search-friends">
-                        <button class="btn addFriendBtn pull-right" title="添加好友" type="button" data-toggle="modal"
+                        <!-- <button class="btn addFriendBtn pull-right" title="添加好友" type="button" data-toggle="modal"
                             data-target="#addFriend"><i class="icon-plus"></i></button>
+                        <div class="clearfix"></div> -->
+
+                        <div class="dropdown">
+                            <button class="btn addFriendBtn pull-right dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-plus"></i>
+                            </button>
+                            <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">
+                                <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
+                                        data-target="#addFriend">添加好友</a></li>
+                                <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal"
+                                        data-target="#createGroup">创建群组</a></li>
+                            </ol>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                 </form>
@@ -71,8 +84,8 @@
                     <i class="icon-navicon s20"></i>
                 </button> -->
                 <a class="a-none friend" href="javascript:void(null);">
-                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">
-                    <span class="friendName s15 strong">登山花椒</span>
+                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle" id="chatTopImg">
+                    <span class="friendName s15 strong" id="chatTopName">登山花椒</span>
                 </a>
                 <!-- <button type="button" class="close" id="ifm-close">&times;</button> -->
             </div>
@@ -110,7 +123,7 @@
             <div class="currentUser">
                 <!--当前用户头像-->
                 <div class="changeAvatar">
-                    <img src="img/user.jpg" class="cursor-pointer img-circle" width="80">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle" width="80" height="80">
                 </div>
                 <span class="currentUserAccount" id="Info-name"></span>
             </div>
@@ -194,7 +207,6 @@
                         <div class="form-group search-result-wrap bbrr bblr my-panel-diy" style="height: 380px">
 
                             <ul class="friend-list" style="height: auto;" id="searchUsersResult">
-
                                 <li id="nullSearchResult">
                                     <span class="text-center block pt25 pb25 s15"
                                         style="color: rgba(0,0,0,0.63);">请输入您要搜索的用户</span>
@@ -208,6 +220,45 @@
 
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创建群组模态框 -->
+    <div class="modal fade" id="createGroup" tabindex="-1" role="dialog" aria-labelledby="createGroupLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createGroupLabel">创建群组</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- 模态框内容 -->
+                <div class="modal-body">
+                    <form>
+                        <!-- 群组名称输入框 -->
+                        <div class="form-group">
+                            <label for="groupName">群组名称：</label>
+                            <input type="text" class="form-control" id="groupName" placeholder="请输入群组名称">
+                        </div>
+                        <!-- 搜索好友输入框 -->
+                        <div class="form-group">
+                            <label for="searchFriend">选择好友：</label>
+                            <!-- <input type="text" class="form-control" id="searchFriend" placeholder="请输入好友的用户名或邮箱"> -->
+                        </div>
+                        <div id="friendsGroup"></div>
+                        <!-- ... -->
+                    </form>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <!-- 创建群组按钮 -->
+                    <button type="button" class="btn btn-primary" id="createGroupBtn">创建群组</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -253,6 +304,7 @@
     <script type="text/javascript" src="./dist/js/emojionearea.min.js"></script>
     <script src="./js/friends/info.js"></script>
     <script src="./js/friends/chatData.js"></script>
+    <script src="./js/user.js" type="text/javascript"></script>
     <script>
         // 页面全部加载完成后 loading动画消失
         window.onload = function () {
@@ -299,6 +351,7 @@
                         '</li>';
                 }
                 $("#left-friend-list").append(friendNode);
+                friendsClick();
             };
             initFriends();
 
@@ -306,7 +359,7 @@
             var getFriendInfoByName = function (name) {
                 // 在这里根据具体实现，返回对应姓名的好友信息
                 // 例如可以遍历一个好友信息数组，找到对应姓名的好友信息后返回
-
+                friendsInfo = JSON.parse(localStorage.getItem('friendsInfo'));
                 for (var i = 0; i < friendsInfo.length; i++) {
                     if (friendsInfo[i].name === name) {
                         friendInfo = friendsInfo[i];
@@ -317,18 +370,19 @@
             };
 
             var chatShow = $(".chat-show");
+            var currentFriend = friendsInfo[0];
 
-            function switchFriend(userName) {
+            function switchFriend(userInfo) {
                 // 获取聊天显示区域的元素
                 const chatShowDiv = document.querySelector(".chat-show");
                 // 清空聊天显示区域
                 chatShowDiv.innerHTML = "";
 
                 // 遍历对话记录，根据发送者显示消息
-                const conversation = chatData[userName];
+                const conversation = chatData[userInfo.name];
                 if (conversation && conversation.length > 0) {
                     for (let i = 0; i < conversation.length; i++) {
-                        const { sender, message: msg, timestamp, fileName, fileSize,fileType,fileUrl } = conversation[i];
+                        const { sender, message: msg, timestamp, fileName, fileSize, fileType, fileUrl } = conversation[i];
                         const msgDiv = document.createElement("div");
                         msgDiv.classList.add("msg");
 
@@ -340,9 +394,9 @@
           <input class="NowTime" value="${timestamp}" type="hidden" />
         `;
                             msgDiv.classList.add("my-msg", "fadeInUp");
-                        } else if (sender === userName) {
+                        } else if (sender === userInfo.name) {
                             msgDiv.innerHTML = `
-          <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+          <img  src="${userInfo.avatar}" class="ChatUser-img mr20 cursor-pointer img-circle">
           ${msg !== undefined && isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 400px;border-radius:10px;" />` : `<span class="friend-msg-qipao">${msg}</span>`}
           ${msg === undefined ? `<a href="${fileUrl}" target="_blank" class="file-link">文件</a>` : ''}
           <input class="NowTime" value="${timestamp}" type="hidden" />
@@ -356,52 +410,50 @@
             function isImage(url) {
                 return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
             }
-
-            var currentFriend = friendsInfo[0].name;
             //初始化消息页面
             switchFriend(currentFriend);
 
             // 点击左侧好友列表
             // 获取所有好友节点
-            var friendNodes = document.querySelectorAll("#left-friend-list li");
-            friendNodes.forEach(function (friendNode) {
-                friendNode.addEventListener("click", function (e) {
-                    // 阻止默认的链接跳转行为
-                    e.preventDefault();
-                    toggleSidebar();
+            function friendsClick() {
+                var friendNodes = document.querySelectorAll("#left-friend-list li");
+                friendNodes.forEach(function (friendNode) {
+                    friendNode.addEventListener("click", function (e) {
+                        // 阻止默认的链接跳转行为
+                        e.preventDefault();
+                        toggleSidebar();
 
-                    // 获取当前点击的好友名字
-                    var currentFriend = this.querySelector('.friendName').textContent;
-                    //$('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
-                    //chatShow.html(""); // 刷新/清空聊天窗口
-                    $(this).siblings().children('a.friend').removeClass('active');
-                    $(this).find('a.friend').addClass('active');// 添加点击效果
+                        // 获取当前点击的好友名字
+                        var currentFriend = getFriendInfoByName(this.querySelector('.friendName').textContent);
+                        //$('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
+                        //chatShow.html(""); // 刷新/清空聊天窗口
+                        $(this).siblings().children('a.friend').removeClass('active');
+                        $(this).find('a.friend').addClass('active');// 添加点击效果
 
-                    // 根据好友姓名获取该好友信息
-                    var friendInfo = getFriendInfoByName(currentFriend);
-                    switchInfo(friendInfo);
-                    switchFriend(friendInfo.name);
+                        switchInfo(currentFriend);
+                        switchFriend(currentFriend);
 
-                    // 点击删除好友
-                    $(".deleteFriendBtn").on("click", function () {
-                        // 从localStorage获取friendInfo数据
-                        var friendsInfo = JSON.parse(localStorage.getItem('friendsInfo'));
+                        // 点击删除好友
+                        $(".deleteFriendBtn").on("click", function () {
+                            // 从localStorage获取friendInfo数据
+                            var friendsInfo = JSON.parse(localStorage.getItem('friendsInfo'));
 
-                        $("#yesDelete").on("click", function () {
-                            // 找到要删除的朋友
-                            // 在friendInfo中移除friendToDelete
-                            friendsInfo = friendsInfo.filter(function (friend) {
-                                return friend.name !== currentFriend;
-                            });
+                            $("#yesDelete").on("click", function () {
+                                // 找到要删除的朋友
+                                // 在friendInfo中移除friendToDelete
+                                friendsInfo = friendsInfo.filter(function (friend) {
+                                    return friend.name !== currentFriend.name;
+                                });
 
-                            // 更新friendInfo并将其存回localStorage
-                            localStorage.setItem('friendsInfo', JSON.stringify(friendsInfo));
-                        })
+                                // 更新friendInfo并将其存回localStorage
+                                localStorage.setItem('friendsInfo', JSON.stringify(friendsInfo));
+                            })
+                        });
+
                     });
-
                 });
-            });
-
+            }
+            friendsClick();
             function switchInfo(Info) {
                 // 获取要替换的元素
                 const changeAvatarElem = document.querySelector('.changeAvatar img');
@@ -413,6 +465,9 @@
                 const InfoCostellation = document.getElementById('Info-costellation');
                 const InfoSentence = document.getElementById('Info-sentence');
 
+                const chatTopName = document.getElementById('chatTopName');
+                const chatTopImg = document.getElementById('chatTopImg');
+
                 // 替换头像路径
                 changeAvatarElem.src = Info.avatar;
                 InfoName.textContent = Info.name;
@@ -422,6 +477,9 @@
                 InfoBirth.textContent = Info.birth;
                 InfoCostellation.textContent = Info.costellation;
                 InfoSentence.textContent = Info.sentence;
+
+                chatTopName.textContent = Info.name;
+                chatTopImg.src = Info.avatar;
             }
 
             // 表情插件初始化
@@ -500,7 +558,7 @@
                     chatData[currentFriend] = friendChatHistory;
                     localStorage.setItem("chatData", JSON.stringify(chatData));
 
-                } else if(!$("#file-input").val()){
+                } else if (!$("#file-input").val()) {
                     // 显示不可发送空消息的提示
                     $(".alertTips").fadeIn();
                     setTimeout(function () {
@@ -583,15 +641,26 @@
 
             // 点击事件处理函数
             function toggleSidebar() {
-                infoSidebar.classList.toggle('show');
                 switchInfo(currentUser)
             }
+
+            const friendsGroup = document.getElementById('friendsGroup');
+            var friendNode = "";
+            for (var i = 0; i < friends.length; i++) {
+                friendNode += '<li style="margin-bottom:10px;">' +
+                    '    <a class="a-none friend" href="javascript:void(null);">' +
+                    '        <img src="' + friends[i].avatar + '" class="users-img cursor-pointer img-circle friendavatar">' +
+                    '        <span class="friendName s15">' + friends[i].name + '</span>' +
+                    '    </a>' +
+                    '</li>';
+            }
+            $("#friendsGroup").append(friendNode);
 
             // 绑定点击事件监听器
             sidebarToggleBtn.addEventListener('click', toggleSidebar);
 
             // 搜索用户框
-            var searchUsers = $("#search-users");
+            var searchUsers = $("#search-users", "#searchFriend");
             // 搜索好友框
             var searchFriends = $("#search-friends");
 
@@ -610,6 +679,60 @@
                     $("#left-friend-list li:not(#notResult)").hide();
                     $("#left-friend-list li#notResult").show();
                 }
+            });
+
+            $(document).ready(function () {
+                // 定义一个用于存储选中好友的group对象
+                var group = {};
+
+                // 为每个好友节点添加点击事件
+                $("#friendsGroup").on("click", ".friend", function () {
+                    // 获取当前点击的好友节点以及其对应的数据
+                    var $friend = $(this);
+                    var friendIndex = $friend.parent().index();
+                    var friendData = friends[friendIndex];
+
+                    // 判断当前好友节点是否被选中
+                    if ($friend.hasClass("selected")) {
+                        // 如果已经选中，则取消选中状态并从group对象中删除该好友
+                        $friend.removeClass("selected");
+                        delete group[friendData.name];
+                    } else {
+                        // 如果未选中，则添加选中状态并将该好友添加到group对象中
+                        $friend.addClass("selected");
+                        group[friendData.name] = friendData;
+                    }
+                    // 添加/移除名称描边样式
+                    $friend.find(".friendName").toggleClass("chosen");
+                });
+
+                // 监听创建群组按钮的点击事件
+                $("#createGroupBtn").click(function () {
+                    // 获取群组名称输入框的值
+                    var groupName = $("#groupName").val();
+
+                    // 创建一个群组对象，并设置群组名称和成员列表
+                    var groupData = {
+                        name: "(群聊)" + groupName,
+                        members: Object.values(group),
+                        avatar: './img/blur1.jpg',
+                    };
+                    // 获取之前保存在localStorage中的好友信息列表
+                    var friendsInfo = JSON.parse(localStorage.getItem("friendsInfo"));
+                    // 添加新创建的群组数据到列表中
+                    friendsInfo.push(groupData);
+                    // 将更新后的好友信息列表重新保存到localStorage
+                    localStorage.setItem("friendsInfo", JSON.stringify(friendsInfo));
+
+                    // 从本地存储中获取好友信息数组
+                    friends = JSON.parse(localStorage.getItem('friendsInfo'));
+                    $(".friend-list").empty();
+                    // 初始化所有好友
+                    initFriends();
+
+                    // 关闭模态框
+                    $("#createGroup").modal("hide");
+                });
             });
 
             // 搜索用户
@@ -633,20 +756,17 @@
                     searchUsersResult.append(noSearchResult);
 
                     $("#left-friend-list li:not(#notResult)").each(function () {
-
                         if ($(this).find(".friendName").text().includes(userName)) {
 
                             searchUsersResult.empty();
                             var fimg = $(this).find('img').attr('src');
                             node += "<a class=\"a-none\" href=\"javascript:void(null);\">\n" +
                                 "                                <img src=\"" + fimg + "\" class=\"users-img cursor-pointer img-circle\">\n" +
-                                "                                <span class=\"friendName s15 strong\">" + userName + "</span>\n" +
+                                "                                <span class=\"friendName s15 strong\">" + $(this).find(".friendName").text() + "</span>\n" +
                                 "                                <button class=\"btn white-bg btn-sm addBtns clearClass\" type=\"button\" data-toggle=\"modal\" data-target=\"#addFriendOk\">已添加</button>\n" +
                                 "                            </a>";
                             var mynode = "<li>" + node + "</li>";
-
                             searchUsersResult.append(mynode);
-
                         } else {// 查询LocalStorage中的UserTable数据
                             var userTable = JSON.parse(localStorage.getItem('userTable'));
 
