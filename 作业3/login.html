@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width-device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>Login</title>
+
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="dist/css/jquery-ui.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="fonts/custom-fonts.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/custom-styles.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/custom-global.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/login.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+</head>
+
+<div class="login-page container relative Index99">
+    <div class="login-form" id="thePages">
+        <!-- 注册 -->
+        <form id="register-form" class="theform clearfix" action="chat.html" role="form">
+            <div class="form-group">
+                <h2 class="form-title">注册</h2>
+                <small>请输入账户与密码</small>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control bsn" id="register-username" maxlength="15" placeholder="Username"
+                    required oninvalid="setCustomValidity('用户名不能为空')" oninput="setCustomValidity('')" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control bsn" id="register-password" maxlength="15"
+                    placeholder="Password" required oninvalid="setCustomValidity('密码不能为空')"
+                    oninput="setCustomValidity('')" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control bsn" id="register-email" maxlength="25"
+                    placeholder="Email address" required oninvalid="setCustomValidity('邮箱地址不能为空')"
+                    oninput="setCustomValidity('')" />
+            </div>
+
+            <button type="submit" class="brall formBtn">注 册</button>
+            <p>已经有账号了? <a class="toggleFormBtn" href="javascript:void(0);" onclick="toggleForm()">立即登录</a></p>
+        </form>
+
+        <!-- 登录 -->
+        <form id="login-form" class="theform clearfix" action="chat.html" role="form">
+
+            <div class="form-group">
+                <h2 class="form-title">用户登录</h2>
+                <small>请输入账户和密码</small>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control bsn" id="login-username" maxlength="15" placeholder="Username"
+                    required oninvalid="setCustomValidity('用户名不能为空')" oninput="setCustomValidity('')" />
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control bsn" id="login-password" maxlength="15"
+                    placeholder="Password" required oninvalid="setCustomValidity('密码不能为空')"
+                    oninput="setCustomValidity('')" />
+            </div>
+
+            <button type="submit" class="brall formBtn">登 录</button>
+            <p>还没有账号? <a class="toggleFormBtn" href="javascript:void(0);" onclick="toggleForm()">立即注册</a></p>
+        </form>
+    </div>
+</div>
+
+
+<script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="dist/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/custom-scripts.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/mustache.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-confirm/jquery-confirm.min.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var userTable = [
+    {
+        password: "0929Sunhanya",
+        name: "八百斤鸭",
+        avatar: './img/user.jpg',
+        id: "Duck_800",
+        gender: "女",
+        area: "江苏 南通",
+        birth: "2003-09-29",
+        costellation: "天秤座",
+        sentence: "一枚脆弱的软工女大学生。",
+    },
+    {
+        password: "1",
+        name: "test",
+        avatar: './img/img-4.jpg',
+        id: "未知",
+        gender: "未知",
+        area: "未知",
+        birth: "未知",
+        costellation: "未知",
+        sentence: "未知",
+    }
+];
+
+// 将用户表存储到本地存储中
+localStorage.setItem('userTable', JSON.stringify(userTable));
+
+    // 切换表单
+    function toggleForm() {
+        $('.theform').animate({
+            height: 'toggle',
+            opacity: 'toggle'
+        }, 'slow');
+
+        const inputSelectors = [
+            '#login-username',
+            '#login-password',
+            '#register-email',
+            '#register-username',
+            '#register-password'
+        ];
+
+        // 循环清空输入框内容
+        inputSelectors.forEach(selector => {
+            const input = document.querySelector(selector);
+            if (input) {
+                input.value = '';
+            }
+        });
+    }
+
+    // 登录逻辑
+    const loginForm = document.getElementById('login-form'); // 获取登录表单元素
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // 阻止表单的默认提交行为
+
+        const username = document.getElementById('login-username').value; // 获取用户名输入框的值
+        const password = document.getElementById('login-password').value; // 获取密码输入框的值
+
+        const userTable = JSON.parse(localStorage.getItem('userTable'));
+        // 从 localStorage 中获取存储的用户表
+
+        const user = userTable.find(user => user.name === username);
+        // 在用户表中查找与输入的用户名匹配的用户
+
+        if (user && user.password === password) {
+            // 用户存在且密码匹配，登录成功
+            alert('登录成功！');
+            // 登录成功后，将用户信息存储在共享的键中
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            window.location.href = "chat.html?user=" + encodeURIComponent(JSON.stringify(user));
+            // 可以在这里进行页面跳转或其他操作
+        } else {
+            // 用户不存在或密码不匹配，登录失败
+            alert('用户名或密码错误！');
+        }
+    });
+
+    // 注册逻辑
+    const registerForm = document.getElementById('register-form'); // 获取注册表单元素
+    registerForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // 阻止表单的默认提交行为
+
+        const username = document.getElementById('register-username').value; // 获取用户名输入框的值
+        const password = document.getElementById('register-password').value; // 获取密码输入框的值
+
+        // 检查用户名是否已存在
+        if (localStorage.getItem(username)) {
+            // 用户名已存在，注册失败
+            alert('用户名已存在，请选择其他用户名！');
+        } else {
+            // 用户名可用，创建新用户对象
+            // 创建新用户对象
+            var newUser = {
+                password: password,
+                name: username,
+                avatar: './img/user.jpg',
+                id: "请设置",
+                gender: "未知",
+                area: "未知",
+                birth: "未知",
+                costellation: "未知",
+                sentence: "未知"
+            };
+
+            // 获取用户表
+            var userTable = JSON.parse(localStorage.getItem('userTable'));
+            // 如果用户表不存在，则创建一个空数组
+            if (!userTable) {
+                userTable = [];
+            }
+            // 将新用户添加到已注册的用户列表中
+            userTable.push(newUser);
+            // 存储更新后的用户列表到本地存储
+            localStorage.setItem('userTable', JSON.stringify(userTable));
+
+            alert('注册成功！');
+            toggleForm();
+            window.location.href = 'javascript:void(0);';
+            // 可以在这里进行页面跳转或其他操作
+        }
+    });
+</script>
+
+</html>

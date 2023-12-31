@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width-device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>ChatRoom</title>
+
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="dist/css/jquery-ui.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="fonts/custom-fonts.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/custom-styles.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/custom-global.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/custom-chat.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/animate.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="css/loaders.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet" type="text/css" charset="UTF-8" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.css"
+        rel="stylesheet" type="text/css" media="screen">
+    <link href="dist/css/emojionearea.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+
+<body class="transition-true">
+    <!-- 页面加载效果 -->
+    <div id="loading" class="bg-main pb70">
+        <i class="icon-spinner3 s32 color-white block loading"></i>
+        <span class="loading-title block mt20 color-white">正在加载,请耐心等待...</span>
+    </div>
+
+    <!-- 聊天区域 -->
+    <div class="chat-content">
+        <div class="sideBar" id="Sidebar">
+            <div class="logo">
+                <img src="img/logo.png" style="width:35px;" />
+            </div>
+            <div class="currentUser">
+                <!--当前用户头像-->
+                <a class="currentUserImg" id="sidebarToggleBtn">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle">
+                </a>
+            </div>
+        </div>
+        <!-- 左侧边栏 -->
+        <div class="chat-left" id="chatSidebar">
+            <h3 style="position:relative;left:5%;">信息</h3>
+            <div class="chat-left-top">
+                <form class="form-inline chat-top-form per100">
+                    <div class="form-group per100 search-group">
+                        <i class="icon-search"></i>
+                        <input class="form-control search-input per85 mr5 pull-left" type="text" placeholder="搜索"
+                            id="search-friends">
+                        <button class="btn addFriendBtn pull-right" title="添加好友" type="button" data-toggle="modal"
+                            data-target="#addFriend"><i class="icon-plus"></i></button>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+            <!-- <hr width="90%"
+                style="margin:5px auto 0px;border:0.5px solid rgba(0,0,0,0.08);box-shadow: 0 1px 0px rgba(245,245,245,.6)" /> -->
+            <!-- 好友列表 -->
+            <ul class="friend-list" id="left-friend-list">
+            </ul>
+        </div>
+
+        <!-- 右侧聊天窗口 -->
+        <div class="chat-central" id="chat-central">
+            <div class="chat-central-top">
+                <!-- 聊天icon -->
+                <!-- <button class="btn btn-link a-none" id="sidebarBtn">
+                    <i class="icon-navicon s20"></i>
+                </button> -->
+                <a class="a-none friend" href="javascript:void(null);">
+                    <img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">
+                    <span class="friendName s15 strong">登山花椒</span>
+                </a>
+                <!-- <button type="button" class="close" id="ifm-close">&times;</button> -->
+            </div>
+
+            <!-- 消息显示 -->
+            <div class="chat-show my-panel-diy">
+
+            </div>
+            <!-- 输入消息区域 -->
+            <div class="chat-input">
+                <form class="chat-form" role="form" action="#" method="post">
+                    <div class="form-group m0">
+                        <!-- 输入消息的文本域 -->
+                        <textarea id="chat-textarea" class="form-control" maxlength="300"></textarea>
+                    </div>
+                    <div class="form-group m0 pr15 pb15 pt5 white-bg relative">
+                        <!-- 发送消息的按钮 -->
+                        <span class="alertTips">不能发送空的消息</span>
+                        <button type="button" class="sendMsgBtn" id="sendMsgBtn">发送(s)</button>
+                        <!-- 添加一个选择文件的按钮 -->
+                        <input type="file" id="file-input" class="file-input">
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 右侧边栏 -->
+        <div class="chat-right" id="infoSidebar">
+            <div class="chat-right-top">
+                <h4 class="chat-title">
+                    <span id="PersonInfo">用户信息</span>
+                </h4>
+                <button type="button" class="close" id="ifm-close">&times;</button>
+            </div>
+            <div class="currentUser">
+                <!--当前用户头像-->
+                <div class="changeAvatar">
+                    <img src="img/user.jpg" class="cursor-pointer img-circle" width="80">
+                </div>
+                <span class="currentUserAccount" id="Info-name"></span>
+            </div>
+            <div class="userInfo">
+                <row style="width:100%; display: flex; margin: 0px 0px 20px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>ID</strong>
+                    </column>
+                    <column>
+                        <span id="Info-id"></span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <strong>性别</strong>
+                    </column>
+                    <column>
+                        <strong>地区</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <span id="Info-sex"></span>
+                    </column>
+                    <column>
+                        <span id="Info-area"></span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;margin: 5px 0px 0px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>生日</strong>
+                    </column>
+                    <column>
+                        <strong>星座</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 50%">
+                        <span id="Info-birth"></span>
+                    </column>
+                    <column>
+                        <span id="Info-costellation"></span>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex; margin: 20px 0px 0px 0px;">
+                    <column style="flex-basis: 50%">
+                        <strong>个性签名</strong>
+                    </column>
+                </row>
+                <row style="width:100%; display: flex;">
+                    <column style="flex-basis: 100%">
+                        <span id="Info-sentence"></span>
+                    </column>
+                </row>
+            </div>
+            <div>
+                <!-- 修改信息的按钮 -->
+                <button class="InfoBtn" id="info-btn">修改信息</button>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <!-- 添加好友模态框 -->
+    <div class="modal fade" id="addFriend" tabindex="-1" aria-hidden="false" role="dialog"
+        aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: 450px;margin-top: 100px;">
+            <div class="modal-content " style="overflow: hidden">
+                <div class="modal-header gray-bg pl10 pb10 pt10">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title s14"><i class="icon-uniF071 mr5 s15"></i>添加好友</h4>
+                </div>
+                <div class="modal-body text-center pt25">
+                    <form class="search-friend">
+                        <div class="form-group relative">
+                            <i class="icon-search mySearch"></i>
+                            <input class="form-control" type="text" placeholder="搜索朋友" id="search-users">
+                        </div>
+                        <p class="pt10 pb10 s13 gray-bg m0 btlr btrr search-result-title">搜索结果</p>
+                        <div class="form-group search-result-wrap bbrr bblr my-panel-diy" style="height: 380px">
+
+                            <ul class="friend-list" style="height: auto;" id="searchUsersResult">
+
+                                <li id="nullSearchResult">
+                                    <span class="text-center block pt25 pb25 s15"
+                                        style="color: rgba(0,0,0,0.63);">请输入您要搜索的用户</span>
+                                </li>
+                                <!--<li><a class="a-none" href="javascript:void(null);">-->
+                                <!--<img src="img/img-1.jpg" class="users-img cursor-pointer img-circle">-->
+                                <!--<span class="friendName s15 strong">Friend 01</span>-->
+                                <!--<button class="btn white-bg btn-sm addBtns" type="button">添加</button>-->
+                                <!--</a></li>-->
+                            </ul>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认是否删除好友模态框 -->
+    <div class="modal fade" id="confirmDelete" tabindex="-1" aria-hidden="false" role="dialog"
+        aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: 350px;margin-top: 200px;">
+            <div class="modal-content " style="overflow: hidden">
+                <div class="modal-header alert-danger pl10 pb10 pt10">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title s14"><i class="icon-warning mr5 s15"></i>警告</h4>
+                </div>
+                <div class="modal-body text-center pt25">
+                    <form id="deleteFriend-form">
+                        <p class="pt15 pb15 s16 flex-center">
+                            <!-- 将要删除的好友用户名 -->
+                            <input type="hidden" id="DeleteFriendAccount" value="">
+                            <input type="hidden" id="myAccount" value="">
+                            <strong class="modal-alert text-left">
+                                确定要删除这个好友吗?
+                            </strong>
+                        </p>
+                        <div class="form-group mb5 mt15">
+                            <button class="btn btn-default per25" data-dismiss="modal" type="button">取消</button>
+                            <button class="btn btn-danger per25" type="button" id="yesDelete">确认</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="dist/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/custom-scripts.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/mustache.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-confirm/jquery-confirm.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/lib/js/emojione.min.js"></script>
+    <script type="text/javascript" src="./dist/js/emojionearea.min.js"></script>
+    <script src="./js/friends/info.js"></script>
+    <script src="./js/friends/chatData.js"></script>
+    <script>
+        // 页面全部加载完成后 loading动画消失
+        window.onload = function () {
+            setTimeout(function () {
+                $("#loading").fadeOut();
+            }, 300);
+        };
+
+        $(function () {
+            $(document).tooltip();
+            // 从 localStorage 获取共享的键，并将其解析为 JSON 对象
+            function getQueryVariable(variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    if (decodeURIComponent(pair[0]) === variable) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+                return null;
+            }
+            var currentUser = JSON.parse(decodeURIComponent(getQueryVariable("user")));
+
+            // 从本地存储中获取好友信息数组
+            var friends = JSON.parse(localStorage.getItem('friendsInfo'));
+            // 初始化所有好友
+            var initFriends = function () {
+                var friendNode = "";
+                for (var i = 0; i < friends.length; i++) {
+                    friendNode += '<li>' +
+                        '    <a class="a-none friend" href="javascript:void(null);">' +
+                        '        <img src="' + friends[i].avatar + '" class="users-img cursor-pointer img-circle friendavatar">' +
+                        '        <span class="friendName s15 strong">' + friends[i].name + '</span>' +
+                        '    </a>' +
+                        '    <div class="dropdown">' +
+                        '        <button class="btn btn-link a-none dropdown-toggle" data-toggle="dropdown">' +
+                        '            <i class="icon-dots-horizontal-triple s20"></i>' +
+                        '        </button>' +
+                        '        <ol class="dropdown-menu-right dropdown-menu p0 animated fadeInDown" role="menu">' +
+                        '            <li><a class="p15 pt10 pb10 cursor-pointer deleteFriendBtn" data-toggle="modal" data-target="#confirmDelete">删除好友</a></li>' +
+                        '        </ol>' +
+                        '    </div>' +
+                        '</li>';
+                }
+                $("#left-friend-list").append(friendNode);
+            };
+            initFriends();
+
+            // 根据姓名获取好友信息的函数
+            var getFriendInfoByName = function (name) {
+                // 在这里根据具体实现，返回对应姓名的好友信息
+                // 例如可以遍历一个好友信息数组，找到对应姓名的好友信息后返回
+
+                for (var i = 0; i < friendsInfo.length; i++) {
+                    if (friendsInfo[i].name === name) {
+                        friendInfo = friendsInfo[i];
+                        break;
+                    }
+                }
+                return friendInfo;
+            };
+
+            var chatShow = $(".chat-show");
+
+            function switchFriend(userName) {
+                // 获取聊天显示区域的元素
+                const chatShowDiv = document.querySelector(".chat-show");
+                // 清空聊天显示区域
+                chatShowDiv.innerHTML = "";
+
+                // 遍历对话记录，根据发送者显示消息
+                const conversation = chatData[userName];
+                if (conversation && conversation.length > 0) {
+                    for (let i = 0; i < conversation.length; i++) {
+                        const { sender, message: msg, timestamp, fileName, fileSize,fileType,fileUrl } = conversation[i];
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("msg");
+
+                        if (sender === currentUser.name) {
+                            msgDiv.innerHTML = `
+          ${msg !== undefined && isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 500px;" />` : `<span class="my-msg-qipao">${msg}</span>`}
+          ${msg === undefined ? `<a href="${fileUrl}" target="_blank" class="file-link">文件</a>` : ''}
+          <img src="img/user.jpg" class="ChatUser-img cursor-pointer ml20 img-circle">
+          <input class="NowTime" value="${timestamp}" type="hidden" />
+        `;
+                            msgDiv.classList.add("my-msg", "fadeInUp");
+                        } else if (sender === userName) {
+                            msgDiv.innerHTML = `
+          <img src="img/img-1.jpg" class="ChatUser-img mr20 cursor-pointer img-circle">
+          ${msg !== undefined && isImage(msg) ? `<img src="${msg}" class="msg-img" style="width: 400px;border-radius:10px;" />` : `<span class="friend-msg-qipao">${msg}</span>`}
+          ${msg === undefined ? `<a href="${fileUrl}" target="_blank" class="file-link">文件</a>` : ''}
+          <input class="NowTime" value="${timestamp}" type="hidden" />
+        `;
+                            msgDiv.classList.add("friend-msg", "fadeInDown");
+                        }
+                        chatShowDiv.appendChild(msgDiv);
+                    }
+                }
+            }
+            function isImage(url) {
+                return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+            }
+
+            var currentFriend = friendsInfo[0].name;
+            //初始化消息页面
+            switchFriend(currentFriend);
+
+            // 点击左侧好友列表
+            // 获取所有好友节点
+            var friendNodes = document.querySelectorAll("#left-friend-list li");
+            friendNodes.forEach(function (friendNode) {
+                friendNode.addEventListener("click", function (e) {
+                    // 阻止默认的链接跳转行为
+                    e.preventDefault();
+                    toggleSidebar();
+
+                    // 获取当前点击的好友名字
+                    var currentFriend = this.querySelector('.friendName').textContent;
+                    //$('#current-friend').text(currentFriend); // 添加到聊天窗口顶部标题处
+                    //chatShow.html(""); // 刷新/清空聊天窗口
+                    $(this).siblings().children('a.friend').removeClass('active');
+                    $(this).find('a.friend').addClass('active');// 添加点击效果
+
+                    // 根据好友姓名获取该好友信息
+                    var friendInfo = getFriendInfoByName(currentFriend);
+                    switchInfo(friendInfo);
+                    switchFriend(friendInfo.name);
+
+                    // 点击删除好友
+                    $(".deleteFriendBtn").on("click", function () {
+                        // 从localStorage获取friendInfo数据
+                        var friendsInfo = JSON.parse(localStorage.getItem('friendsInfo'));
+
+                        $("#yesDelete").on("click", function () {
+                            // 找到要删除的朋友
+                            // 在friendInfo中移除friendToDelete
+                            friendsInfo = friendsInfo.filter(function (friend) {
+                                return friend.name !== currentFriend;
+                            });
+
+                            // 更新friendInfo并将其存回localStorage
+                            localStorage.setItem('friendsInfo', JSON.stringify(friendsInfo));
+                        })
+                    });
+
+                });
+            });
+
+            function switchInfo(Info) {
+                // 获取要替换的元素
+                const changeAvatarElem = document.querySelector('.changeAvatar img');
+                const InfoName = document.getElementById('Info-name');
+                const InfoId = document.getElementById('Info-id');
+                const InfoSex = document.getElementById('Info-sex');
+                const InfoArea = document.getElementById('Info-area');
+                const InfoBirth = document.getElementById('Info-birth');
+                const InfoCostellation = document.getElementById('Info-costellation');
+                const InfoSentence = document.getElementById('Info-sentence');
+
+                // 替换头像路径
+                changeAvatarElem.src = Info.avatar;
+                InfoName.textContent = Info.name;
+                InfoId.textContent = Info.id;
+                InfoSex.textContent = Info.gender;
+                InfoArea.textContent = Info.area;
+                InfoBirth.textContent = Info.birth;
+                InfoCostellation.textContent = Info.costellation;
+                InfoSentence.textContent = Info.sentence;
+            }
+
+            // 表情插件初始化
+            $("#chat-textarea").emojioneArea({
+                template: "<filters/><tabs/><editor/>",
+                autoHideFilters: false
+            });
+
+            // 按回车键发送信息
+            $(".emojionearea-editor").keydown(function (e) {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    e.preventDefault();
+                    $("#sendMsgBtn").click();
+                }
+            });
+
+            // 当前的日期与时间
+            var nowTime = function (date) {
+                var Y = date.getFullYear();  // 年
+                var M = date.getMonth() + 1; // 月
+                var D = date.getDate();      // 日
+                var h = date.getHours();     // 时
+                var m = date.getMinutes();   // 分
+                var s = date.getSeconds();   // 秒
+
+                var nowDate = Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
+                return nowDate;
+            };
+
+            // 点击发送信息
+            $("#sendMsgBtn").click(function () {
+                var mydate = new Date();// 时间
+                var nowtimes = nowTime(mydate);
+                // var msgVal = $("#chat-textarea").val();
+
+                var msgVal = $(".emojionearea-editor").html();
+                var msgNode = "";
+
+                if (msgVal != "") {
+                    // 生成发送的消息
+                    msgNode += "<span class='my-msg-qipao'>" + msgVal + "</span>" +
+                        "       <img src='" + currentUser.avatar + "' class='users-img cursor-pointer ml20 img-circle'>" +
+                        "       <input class='NowTime' value='" + nowtimes + "' type='hidden'/>";
+
+                    // 生成发送的消息的div
+                    var msgNodeDiv = "<div class='my-msg per100 animated fadeInUp msg'>" + msgNode + "</div>";
+
+                    chatShow.append(msgNodeDiv);// 添加到会话窗口
+                    var scrollTopPx = $(".chat-show")[0].scrollHeight;
+                    chatShow.animate({ scrollTop: scrollTopPx }, 500); // 会话窗口滚动到最底部
+                    $(".emojionearea-editor").html("");// 清空会话窗口
+
+                    // 从本地存储中获取聊天记录表，如果不存在则创建一个空表
+                    const chatDataStr = localStorage.getItem("chatData");
+                    let chatData = {};
+
+                    if (chatDataStr) {
+                        chatData = JSON.parse(chatDataStr);
+                    }
+
+                    // 获取对应好友的聊天记录数组，如果不存在则创建一个新的空数组
+                    let friendChatHistory = chatData[currentFriend];
+
+                    if (!friendChatHistory) {
+                        friendChatHistory = [];
+                    }
+                    // 创建一个消息对象，包括消息的发送者、内容和时间戳
+                    const newMessage = {
+                        sender: currentUser.name,
+                        message: msgVal,
+                        timestamp: new Date().toISOString()
+                    };
+                    // 将消息对象推入对应好友的聊天记录数组中
+                    friendChatHistory.push(newMessage);
+                    // 更新本地存储的聊天记录表数据
+                    chatData[currentFriend] = friendChatHistory;
+                    localStorage.setItem("chatData", JSON.stringify(chatData));
+
+                } else if(!$("#file-input").val()){
+                    // 显示不可发送空消息的提示
+                    $(".alertTips").fadeIn();
+                    setTimeout(function () {
+                        $(".alertTips").fadeOut();
+                    }, 2000);
+
+                }
+
+                if ($("#file-input").val()) {
+                    // 获取文件信息
+                    const file = document.getElementById("file-input").files[0];
+                    const fileName = file.name;
+                    const fileSize = file.size;
+                    const fileType = file.type;
+
+                    const fileUrl = URL.createObjectURL(file);
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = fileUrl;
+                    downloadLink.download = fileName;
+                    downloadLink.innerText = "下载文件";
+
+                    const linkDiv = document.createElement("div");
+                    linkDiv.appendChild(downloadLink);
+
+                    // 生成文件发送的 HTML 元素
+                    const msgNode = `<span class='my-msg-qipao'>
+                        <strong>发送了一个文件：</strong>
+                 <div class='file-info'>文件名：${fileName}</div>
+                 <div>大小：${fileSize}字节</div>
+                 <div>类型：${fileType}</div>
+                 <div>${linkDiv.innerHTML}</div>
+                </span> 
+                 <img src='${currentUser.avatar}' class='users-img cursor-pointer ml20 img-circle'>
+                 <input class='NowTime' value='${nowtimes}' type='hidden'>`;
+
+                    const msgNodeDiv = document.createElement("div");
+                    msgNodeDiv.className = "my-msg per100 animated fadeInUp msg";
+                    msgNodeDiv.innerHTML = msgNode;
+
+                    chatShow.append(msgNodeDiv);
+                    const scrollTopPx = $(".chat-show")[0].scrollHeight;
+                    chatShow.animate({ scrollTop: scrollTopPx }, 500); // 会话窗口滚动到最底部
+                    $(".emojionearea-editor").html(""); // 清空会话窗口
+                    document.querySelector('input[type=file]').value = '';
+
+                    // 从本地存储中获取聊天记录表，如果不存在则创建一个空表
+                    const chatDataStr = localStorage.getItem("chatData");
+                    let chatData = {};
+
+                    if (chatDataStr) {
+                        chatData = JSON.parse(chatDataStr);
+                    }
+                    // 获取对应好友的聊天记录数组，如果不存在则创建一个新的空数组
+                    let friendChatHistory = chatData[currentFriend];
+                    if (!friendChatHistory) {
+                        friendChatHistory = [];
+                    }
+
+                    // 创建一个文件信息对象，包括发送者、文件名、大小、类型和时间戳
+                    const newFileMessage = {
+                        sender: currentUser.name,
+                        fileName: fileName,
+                        fileSize: fileSize,
+                        fileType: fileType,
+                        fileUrl: fileUrl,
+                        timestamp: nowtimes,
+                    };
+                    // 将消息对象推入对应好友的聊天记录数组中
+                    friendChatHistory.push(newFileMessage);
+
+                    // 更新本地存储的聊天记录表数据
+                    chatData[currentFriend] = friendChatHistory;
+                    localStorage.setItem("chatData", JSON.stringify(chatData));
+                }
+            });
+
+            // 获取按钮和侧边栏元素
+            const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+            const infoSidebar = document.getElementById('infoSidebar');
+
+            // 点击事件处理函数
+            function toggleSidebar() {
+                infoSidebar.classList.toggle('show');
+                switchInfo(currentUser)
+            }
+
+            // 绑定点击事件监听器
+            sidebarToggleBtn.addEventListener('click', toggleSidebar);
+
+            // 搜索用户框
+            var searchUsers = $("#search-users");
+            // 搜索好友框
+            var searchFriends = $("#search-friends");
+
+            // 搜索好友
+            searchFriends.keyup(function () {
+                var queryStr = $(this).val(); // 搜索框内输入的值
+
+                // 获取搜索结果的长度
+                var resultSize = $("#left-friend-list li").hide().find(".friendName").filter(":contains('" + queryStr + "')").size();
+
+                if (resultSize > 0) {
+                    // 搜索结果的长度 > 0  搜索结果不为空
+                    $("#left-friend-list li").hide().find(".friendName").filter(":contains('" + queryStr + "')").parent('a').parent('li').show();
+                } else {
+                    // 搜索结果的长度 <= 0  搜索结果为空
+                    $("#left-friend-list li:not(#notResult)").hide();
+                    $("#left-friend-list li#notResult").show();
+                }
+            });
+
+            // 搜索用户
+            searchUsers.keyup(function () {
+                // 搜索不到内容时显示的元素
+                var noSearchResult = "<li id='notSearchResult'>" +
+                    "                      <span class='text-center block pt25 pb25 s15' style='border-bottom:1px solid rgba(102,102,102,0.08);color: rgba(0,0,0,0.63);'>用户不存在...</span>" +
+                    "                 </li>";
+                // 搜索的值为空时显示的元素
+                var nullSearchResult = "<li id='nullSearchResult'>" +
+                    "                      <span class='text-center block pt25 pb25 s15' style='color: rgba(0,0,0,0.63);'>请输入您要搜索的用户</span>" +
+                    "                 </li>";
+
+                var searchUsersResult = $("#searchUsersResult");
+                searchUsersResult.empty();
+                var node = "";
+                var userName = $(this).val();
+                var data = "username=" + userName;
+
+                if (userName != "") {
+                    searchUsersResult.append(noSearchResult);
+
+                    $("#left-friend-list li:not(#notResult)").each(function () {
+
+                        if ($(this).find(".friendName").text().includes(userName)) {
+
+                            searchUsersResult.empty();
+                            var fimg = $(this).find('img').attr('src');
+                            node += "<a class=\"a-none\" href=\"javascript:void(null);\">\n" +
+                                "                                <img src=\"" + fimg + "\" class=\"users-img cursor-pointer img-circle\">\n" +
+                                "                                <span class=\"friendName s15 strong\">" + userName + "</span>\n" +
+                                "                                <button class=\"btn white-bg btn-sm addBtns clearClass\" type=\"button\" data-toggle=\"modal\" data-target=\"#addFriendOk\">已添加</button>\n" +
+                                "                            </a>";
+                            var mynode = "<li>" + node + "</li>";
+
+                            searchUsersResult.append(mynode);
+
+                        } else {// 查询LocalStorage中的UserTable数据
+                            var userTable = JSON.parse(localStorage.getItem('userTable'));
+
+                            // 遍历用户数据进行查询
+                            userTable.forEach(function (user) {
+                                if (user.name.includes(userName)) {
+                                    searchUsersResult.empty();
+
+                                    var fimg = user.avatar;
+                                    var node =
+                                        "<a class=\"a-none\" href=\"javascript:void(null);\">\n" +
+                                        "  <img src=\"" + fimg + "\" class=\"users-img cursor-pointer img-circle\">\n" +
+                                        "  <span class=\"friendName s15 strong\">" + userName + "</span>\n" +
+                                        "  <button class=\"btn white-bg btn-sm addBtns clearClass\" type=\"button\" data-toggle=\"modal\" data-target=\"#addFriendOk\">添加</button>\n" +
+                                        "</a>";
+
+                                    var mynode = "<li>" + node + "</li>";
+
+                                    searchUsersResult.append(mynode);
+                                }
+                            });
+
+                        }
+
+                    });
+                } else {
+                    searchUsersResult.empty();
+                    searchUsersResult.append(nullSearchResult);
+                }
+            });
+
+            // 修改信息
+            $("#info-btn").on("click", changeInfo);
+            // 保存信息
+            $("#save-btn").on("click", saveInfo);
+
+            function changeInfo() {
+                function createInput(object) {
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = object.innerText;
+                    input.id = object.id;
+                    if (object != document.getElementById('Info-sentence'))
+                        input.style.width = '110px';
+                    else {
+                        input.style.width = '220px';
+                    }
+                    object.parentNode.replaceChild(input, object);
+                }
+
+                createInput(document.getElementById('Info-id'));
+                createInput(document.getElementById('Info-sex'));
+                createInput(document.getElementById('Info-area'));
+                createInput(document.getElementById('Info-birth'));
+                createInput(document.getElementById('Info-costellation'));
+                createInput(document.getElementById('Info-sentence'));
+
+                // 创建一个新的保存按钮元素
+                var infoBtn = document.getElementById('info-btn');
+                var saveBtn = document.createElement('button');
+                saveBtn.innerText = '保存信息';
+                saveBtn.setAttribute('class', 'InfoBtn');
+                saveBtn.setAttribute('id', 'save-btn');
+                saveBtn.addEventListener('click', saveInfo);
+
+                // 用新的元素替换旧元素
+                infoBtn.parentNode.replaceChild(saveBtn, infoBtn);
+            }
+
+            // 保存信息
+            function saveInfo() {
+                function createSpan(object) {
+                    var span = document.createElement('span');
+                    span.innerText = object.value;
+                    span.id = object.id;
+                    object.parentNode.replaceChild(span, object);
+                }
+
+                createSpan(document.getElementById('Info-id'));
+                createSpan(document.getElementById('Info-sex'));
+                createSpan(document.getElementById('Info-area'));
+                createSpan(document.getElementById('Info-birth'));
+                createSpan(document.getElementById('Info-costellation'));
+                createSpan(document.getElementById('Info-sentence'));
+
+                // 创建一个新的保存按钮元素
+                var saveBtn = document.getElementById('save-btn');
+                var infoBtn = document.createElement('button');
+                infoBtn.innerText = '修改信息';
+                infoBtn.setAttribute('class', 'InfoBtn');
+                infoBtn.setAttribute('id', 'info-btn');
+                infoBtn.addEventListener('click', changeInfo);
+
+                // 用新的元素替换旧元素
+                saveBtn.parentNode.replaceChild(infoBtn, saveBtn);
+
+                var userInfo = {
+                    name: currentUser.name,
+                    id: document.getElementById('Info-id').innerText,
+                    sex: document.getElementById('Info-sex').innerText,
+                    area: document.getElementById('Info-area').innerText,
+                    birth: document.getElementById('Info-birth').innerText,
+                    costellation: document.getElementById('Info-costellation').innerText,
+                    sentence: document.getElementById('Info-sentence').innerText
+                };
+
+                var userTable = JSON.parse(localStorage.getItem('userTable')) || [];
+
+                // 使用 map 方法查找并更新用户数据
+                var updatedUserTable = userTable.map(function (item) {
+                    if (item.name === userInfo.name) {
+                        return userInfo; // 如果已存在相同 name 的数据，则用更新后的数据替换原数据
+                    } else {
+                        return item; // 如果不是要更新的数据，则返回原数据
+                    }
+                });
+
+                // 更新 localStorage 中的数据
+                localStorage.setItem('userTable', JSON.stringify(updatedUserTable));
+            };
+
+            // 获取消息
+            var getMsg = function () {
+                console.log("获取消息...");
+            };
+
+            // 消息根据时间排序
+            var msgSort = function () {
+                var lis = [];
+                lis = $(".msg");
+
+                var ux = [];
+                // 循环提取时间，调用排序方法进行排序
+                for (var i = 0; i < lis.length; i++) {
+                    var tmp = {};
+                    tmp.dom = lis.eq(i);
+                    tmp.date = new Date(lis.eq(i).find(".NowTime").val().replace(/-/g, '/'));
+                    ux.push(tmp);
+                }
+                // 数组排序，支持年的比较
+                ux.sort(function (a, b) {
+                    var myDate = new Date();
+                    var year = myDate.getYear();
+
+                    if (a.date.getYear < year && b.date.getYear == year) {
+                        return true;
+                    }
+                    return a.date - b.date;
+                });
+                // 移除原先顺序错乱的内容
+                chatShow.empty();
+                // 重新添加排序好的内容
+                for (var q = 0; q < ux.length; q++) {
+                    chatShow.append(ux[q].dom);
+                }
+            };
+
+            msgSort();
+
+            $("#sidebarBtn").on("click", function (e) {
+                $("#chatSidebar").removeClass('bounceOutLeft').addClass('bounceInLeft').show();
+
+                $(document).on("click", function () {
+                    if ($("#chatSidebar").hasClass('bounceInLeft')) {
+                        $("#chatSidebar").removeClass('bounceInLeft').addClass('bounceOutLeft').hide();
+                    }
+                });
+
+            });
+        });
+    </script>
+</body>
+
+</html>

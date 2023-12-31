@@ -1,0 +1,686 @@
+/* 定义聊天窗口的布局 */
+/*-------------------------
+	侧边栏
+--------------------------*/
+#chat {
+    background-color: transparent;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    z-index: 9999;
+    display: none;
+}
+
+.chat-body {
+    width: 100%;
+    min-width: 750px;
+    max-width: 1280px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3),
+    0 3px 7px rgba(0, 0, 0, 0.3),
+    inset 0 1px rgba(255, 255, 255, 1),
+    inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+}
+
+.sideBar {
+    height: 100%;
+    width: 4%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-right: 1px solid #eeeeee;
+    background-color: #fafafa;
+  }
+
+/*-------------------------
+	聊天窗口左侧部分
+--------------------------*/
+.chat-left {
+    height: 100%;
+    width:23%;
+    position:absolute;
+    left:4%;
+    top:0%;
+    display: flex;
+
+    flex-flow: column;
+    border-right:1px solid #eeeeee;
+}
+
+#sidebarBtn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .chat-left {
+        position: absolute !important;
+        z-index: 9999 !important;
+        display: none;
+        left: 0;
+        top: 0;
+    }
+
+    #sidebarBtn {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.currentUser {
+    width: 100%;
+    padding: 8px;
+}
+
+.logo{
+    width: 100%;
+    height:7%;
+    text-align:center;
+    display: flex; /* 设置为一个 flex 容器 */
+    justify-content: center; /* 水平居中对齐元素 */
+    align-items: center; /* 垂直居中对齐元素 */
+}
+
+.currentUserImg > img {
+    width: 100%;
+    height: auto;
+}
+
+.chat-left > .currentUser #usersDropdown {
+    position: absolute;
+    right: 10px;
+    top: auto;
+    bottom: auto;
+}
+
+#usersDropdown button {
+    color: #b1b1b1;
+}
+
+.chat-left > .chat-left-top {
+    width: 98%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.chat-top-form {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-group {
+    position: relative;
+}
+
+.search-group > .icon-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #7e7c7c;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.chat-left > .chat-left-top .addFriendBtn {
+    background-color: #eeeeee;
+    vertical-align: center;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.chat-left > .chat-left-top .addFriendBtn:hover {
+    background-color: #c3c1c0;
+
+}
+
+.chat-left > .chat-left-top .addFriendBtn > i {
+    display: block;
+    color: #999;
+}
+
+.chat-left > .chat-left-top .addFriendBtn:hover > i {
+    color: #666;
+
+}
+
+.search-input {
+    background-color: #eeeeee;
+    border-radius:10px;
+    border-color:transparent;
+    padding: 0 35px;
+    cursor: pointer;
+
+    box-shadow: 0 0 0 transparent !important;
+}
+
+.search-input:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+.search-input:focus {
+    background-color: #fff;
+    cursor: text;
+}
+
+/*-------------------------
+	聊天窗口左侧 好友列表
+--------------------------*/
+
+.friend-list {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding: 0;
+    /*border-top: 1px solid #ddd;*/
+    /*border-right: 1px solid #ddd;*/
+}
+
+.friend-list > li {
+    width: 100%;
+    position: relative;
+}
+
+.friend-list > li > a {
+    width: 100%;
+    display: flex;
+    cursor: default;
+    padding: 15px 15px;
+    align-items: center;
+    position: relative;
+    text-decoration: none !important;
+    /*transition: all 200ms linear;*/
+}
+
+.friend-list > li:hover > a {
+    background-color: #E0DEDE;
+    color: black;
+}
+
+.friend-list > li > a.active {
+    background-color: rgba(197, 196, 196, 0.5);
+    color: black;
+}
+
+.friendName {
+    width: 180px;
+    text-align: left;
+    padding-left:15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.friend-list .dropdown {
+    position: absolute;
+    right: 16px;
+    top: 25%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.friend-list > li:hover > .dropdown {
+    opacity: .7;
+}
+
+.friend-list > li > a.active + .dropdown {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.friend-list .dropdown > button {
+    color: #999;
+    padding: 7px 6px 3px;
+    border-radius: 4px;
+}
+
+.friend-list .dropdown > button:hover {
+    color: #666;
+}
+
+.friend-list .dropdown > button:focus {
+    color: #333;
+    background-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.addBtns {
+    position: absolute;
+    right: 8%;
+    color: #000;
+    outline: none !important;
+    border-color: rgba(157, 157, 157, 0.38) !important;
+}
+
+.clearClass {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    pointer-events: none !important;
+    color: #999;
+}
+
+.addBtns:hover {
+    background-color: white !important;
+
+}
+
+/*-------------------------
+	聊天窗口中间部分
+--------------------------*/
+.chat-central {
+    flex: 1;
+    height: 100%;
+    width:55%;
+    position:absolute;
+    left:27%;
+    top:0%;
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+    border-right:1px solid #eeeeee;
+}
+
+.chat-central > .chat-central-top {
+    width: 100%;
+    min-height: 65px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-left:5px;
+}
+
+.users-img {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.ChatUser-img{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+
+/*-------------------------
+	聊天窗口中间 - 消息显示区域
+--------------------------*/
+.chat-central > .chat-show {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    background-color: #eaeaea;
+}
+
+/*-------------------------
+    消息气泡框
+--------------------------*/
+
+.my-msg-qipao, .friend-msg-qipao {
+    border-radius: 10px;
+    display: inline-block;
+    width: auto;
+    padding: 10px 15px 10px 15px;
+    position: relative;
+    background-color: #fff;
+}
+
+.friend-msg {
+    display: flex;
+    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.my-msg {
+    display: flex;
+    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+/*-------------------------
+    消息输入区域
+-------------------------*/
+.chat-central > .chat-input {
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    background-color: #f5f5f5;
+}
+
+.file-input{
+    display: block;
+    position: absolute;
+    bottom:50%;
+    left:3%;
+    border-color: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/*-------------------------
+    消息输入表单
+-------------------------*/
+.chat-input .chat-form {
+    background-color: #f5f5f5;
+}
+
+/*-------------------------
+    消息输入区域 - 表情插件
+-------------------------*/
+.chat-input .emojionearea {
+    border: 0 !important;
+}
+
+.chat-input .emojionearea.focused {
+    border: 0 !important;
+    box-shadow: 0 0 0 transparent !important;
+}
+
+.chat-input .emojionearea .emojionearea-filters {
+    border-top: 1px solid transparent !important;
+}
+
+.chat-input .emojionearea.focused .emojionearea-filters {
+    border-top: 1px solid #e5e5e5;
+}
+
+.chat-input .emojionearea .emojionearea-tabs {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.chat-input .emojionearea .emojionearea-editor {
+    font-size: 16px;
+    height: 100px;
+    padding-top: 10px;
+    overflow-x: hidden;
+    margin-right: 5px;
+    border: 0 !important;
+    background-color: #fff;
+
+}
+
+/*-------------------------
+	聊天窗口右侧 - 个人信息区域
+--------------------------*/
+/* 初始状态下隐藏侧边栏 */
+#infoSidebar {
+    display: none;
+    /* 根据需要设置其他样式 */
+}
+
+/* 右侧边栏显示的动画效果 */
+#chatSidebar.show {
+    display: block;
+    /* 添加其他动画样式 */
+}
+
+.chat-right {
+    flex-basis:20%;
+    height: 100%;
+    width:18%;
+    position:absolute;
+    right:0%;
+    top:0%;
+    display: flex;
+    flex-flow: column; 
+    overflow: hidden;
+    padding:0 15px 0 15px;
+}
+
+.chat-right > .chat-right-top {
+    width: 100%;
+    height: 65px;
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-right-top > .chat-title {
+    font-size: 18px;
+    text-align: center;
+}
+
+.chat-right > .currentUser {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    display: flex;
+    align-items: center;
+
+}
+
+.chat-right > .currentUser > .changeAvatar{
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-right > .currentUser > .changeAvatar > .changebtn{
+    margin: 5px 0px 0px 0px;
+}
+
+.chat-right > .currentUser > .currentUserAccount {
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "苹方", "微软雅黑", sans-serif;
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
+
+.chat-right > .userInfo {
+    width:100%;
+    margin:20px 0px 0px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size:14px;
+}
+
+.currentUserImg > img {
+    width: 100%;
+    height: auto;
+}
+
+.chat-right > .currentUser #usersDropdown {
+    position: absolute;
+    right: 10px;
+    top: auto;
+    bottom: auto;
+}
+
+.InfoBtn{
+    position:absolute;
+    left:35%;
+    bottom:5%;
+    padding:3px 10px 3px 10px;
+    color:#27ae60;
+    background-color: #fff;
+    border-radius: 10px;
+    border-color: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 定义了滚动条整体的样式 */
+.emojionearea-editor::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* 滚动条里面小方块 */
+.emojionearea-editor::-webkit-scrollbar-thumb {
+    background-color: rgba(71, 78, 91, 0.1);
+    border: 1px solid rgba(181, 181, 181, 0.4);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/*滚动条里面轨道*/
+.emojionearea-editor::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: rgba(225, 224, 228, 0.15);
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.emojionearea-editor::-webkit-scrollbar-track:hover {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    background-color: rgba(225, 224, 228, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.emojionearea-editor::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(71, 78, 91, 0.14);
+    border: 1px solid rgba(181, 181, 181, 0.8);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.emojionearea-editor::-webkit-scrollbar-thumb:active {
+    background-color: rgba(71, 78, 91, 0.3);
+    border: 1px solid rgba(181, 181, 181, 1);
+    border-radius: 10px;
+}
+
+/*-------------------------
+    发送消息按钮
+-------------------------*/
+
+.sendMsgBtn {
+    display: block;
+    position: absolute;
+    bottom:50%;
+    right:3%;
+    padding:3px 10px 3px 10px;
+    color:#27ae60;
+    background-color: #fff;
+    border-radius: 10px;
+    border-color: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.alertTips {
+    width: auto;
+    height: auto;
+    top: -76px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.67);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: black;
+    position: absolute;
+    right: 15px;
+    content: "";
+    pointer-events: none;
+    display: none;
+}
+
+.mySearch {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #999;
+    font-size: 14px;
+}
+
+.search-result-wrap {
+    border-top: 1px solid transparent;
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
+    background: #e5e5e55e;
+
+}
+
+.search-result {
+    height: 100%;
+    width: 100%;
+}
+
+.search-result-wrap > .friend-list {
+    border: 1px solid transparent !important;
+}
+
+.search-result-wrap > .friend-list li > a:hover {
+    background-color: rgba(224, 222, 222, 0.65);
+}
+
+.search-result-wrap > .friend-list li > a:focus {
+    background-color: rgba(224, 222, 222, 0.65);
+}
+
+.search-result-title {
+    border: 1px solid #e5e5e5;
+}
+
+/*-------*/
+.img-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 330px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.img-list > li {
+
+    flex: 0 0 20%;
+    display: inline-flex;
+    justify-content: center;
+    /*border: 1px solid red;*/
+    cursor: pointer;
+}
+
+.img-list > li a:not(.active):hover {
+    background-color: #eaeaea;
+}
+
+.img-list > li a.active img,
+.img-list > li a:hover img {
+    transform: scale(1.1);
+}
+
+.img-list > li a.active {
+    background-color: #dbdbdb;
+}
+
+.img-list > li a {
+    width: 100%;
+    height: 100%;
+    padding: 17px 0;
+    display: inline-flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+
+}
+
+.img-list > li a img {
+    transition: var(--transition);
+}
