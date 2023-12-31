@@ -4,6 +4,13 @@
 
 This is a personal program of Web in Tongji , SE School. It tends to build a chatting site. 
 
+## 运行说明
+
++ 作业1：进入“作业1”文件夹中，使用浏览器打开两个html文件即可（推荐Firefox，Chrome有时会出现百度覆盖）。
++ 作业2：进入“作业2”文件夹中，必须先打开login.html，通过页面调转到chat.html（否则登录状态失效）。
+  登录可选账号：用户名（八百斤鸭）；密码（0929Sunhanya）
++ 作业3：同“作业2”。
+
 **总体要求**
 1. 分为三次小作业，实现一个完整的在线聊天网站。
 2. 平时作业不得使用前端框架。
@@ -12,12 +19,12 @@ This is a personal program of Web in Tongji , SE School. It tends to build a cha
 5. 本作业不着重追求美工和设计水平，重点考察课程所学前端技术掌握情况。
 6. 将所有作业一次打包提交到guhungjou@gmail.com，邮件标题：学号_姓名_Web平时作业，您应提交.zip文档，结构树如下：
 - 学号_姓名_Web平时作业.zip
-   +ReadMe如何运行说明
-   +系统总体架构和设计文档
-   +作业1/2/3（三个文件夹）
-   -前端源码（全部html,css,js）
-   -后端源码（编程语言不限，如有）
-   -模块说明
+   + ReadMe如何运行说明 √
+   + 系统总体架构和设计文档
+   + 作业1/2/3（三个文件夹）√
+      - 前端源码（全部html,css,js）√
+      - 后端源码（编程语言不限，如有）
+      - 模块说明
 
 ### 作业一
 请设计一个聊天网站的网页，包括如下界面：
